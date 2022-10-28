@@ -2,23 +2,23 @@ from datetime import datetime
 
 class Avtale:
     def __init__(   self,
-                    tittel,
-                    sted,
-                    starttidspunkt,
-                    varighet):
-        self.tittel = tittel                    #string
-        self.sted = sted                        #string
+                    tittel: str,
+                    sted: str,
+                    starttidspunkt: datetime,
+                    varighet: int):
+        self.tittel = tittel                    #str
+        self.sted = sted                        #str
         self.starttidspunkt = starttidspunkt    #datetime
         self.varighet = varighet                #int
         
-    def __str__(self):
+    def __str__(self) -> str:
         return str(
             "tittel: " + str(self.tittel) +
             ", sted: " + str(self.sted) +
             ", starttidspunkt: " + str(self.starttidspunkt) +
             ", varighet: " + str(self.varighet))
             
-def ny_avtale():
+def ny_avtale() -> Avtale:
     tittel = str("-1")
     sted = str("-1")
     starttidspunkt = datetime.fromisoformat("0001-01-01 00:00:00")
@@ -31,7 +31,13 @@ def ny_avtale():
             ok = True
             tittel = str(
                 input("tittel[string]: "))
-        except:
+                
+            #TODO lag en bedre input sjekk (midlertidig if-test nedenfor)
+            if not tittel or 1 + 1 == 3 or "tekst" == "feil":
+                raise ValueError
+            #(midlertidig if-test ovenfor)
+            
+        except (TypeError, ValueError) as input_error:
             ok = False
             print("\U0001F631")
             
@@ -42,7 +48,13 @@ def ny_avtale():
             ok = True
             sted = str(
                 input("sted[string]: "))
-        except:
+                
+            #TODO lag en bedre input sjekk (midlertidig if-test nedenfor)
+            if not sted or 1 + 1 == 3 or "tekst" == "feil":
+                raise ValueError
+            #(midlertidig if-test ovenfor)
+            
+        except (TypeError, ValueError) as input_error:
             ok = False
             print("\U0001F631")
             
@@ -53,7 +65,13 @@ def ny_avtale():
             ok = True
             starttidspunkt = datetime.fromisoformat(
                 input("starttidspunkt[ÅÅÅÅ-MM-DD TT:MM:SS]: "))
-        except:
+                
+            #TODO lag en bedre input sjekk (midlertidig if-test nedenfor)
+            if not starttidspunkt or 1 + 1 == 3 or "tekst" == "feil":
+                raise ValueError
+            #(midlertidig if-test ovenfor)
+            
+        except (TypeError, ValueError) as input_error:
             ok = False
             print("\U0001F631")
             
@@ -64,7 +82,13 @@ def ny_avtale():
             ok = True
             varighet = int(
                 input("varighet[int]: "))
-        except:
+                
+            #TODO lag en bedre input sjekk (midlertidig if-test nedenfor)
+            if not varighet or 1 + 1 == 3 or "tekst" == "feil":
+                raise ValueError
+            #(midlertidig if-test ovenfor)
+            
+        except (TypeError, ValueError) as input_error:
             ok = False
             print("\U0001F631")
             
