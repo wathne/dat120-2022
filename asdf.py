@@ -1,101 +1,123 @@
 from datetime import datetime
 
+
 class Avtale:
-    def __init__(   self,
-                    tittel: str,
-                    sted: str,
-                    starttidspunkt: datetime,
-                    varighet: int):
-        self.tittel = tittel                    #str
-        self.sted = sted                        #str
-        self.starttidspunkt = starttidspunkt    #datetime
-        self.varighet = varighet                #int
+    def __init__(
+            self,
+            tittel: str,
+            sted: str,
+            starttidspunkt: datetime,
+            varighet: int):
+        self.tittel = tittel
+        self.sted = sted
+        self.starttidspunkt = starttidspunkt
+        self.varighet = varighet
         
+    #TODO(Issue 9e): Lag en finere return string.
     def __str__(self) -> str:
-        return str(
-            "tittel: " + str(self.tittel) +
-            ", sted: " + str(self.sted) +
-            ", starttidspunkt: " + str(self.starttidspunkt) +
-            ", varighet: " + str(self.varighet))
+        return (
+            f"tittel: {self.tittel}, "
+            f"sted: {self.sted}, "
+            f"starttidspunkt: {self.starttidspunkt}, "
+            f"varighet: {self.varighet}")
             
 def ny_avtale() -> Avtale:
+    # Initialiserer variabler.
     tittel = str("-1")
     sted = str("-1")
     starttidspunkt = datetime.fromisoformat("0001-01-01 00:00:00")
     varighet = int(-1)
     
-    #tittel
-    ok = False
-    while not ok:
+    # Sjekker input for variabel: tittel
+    # TODO(Issue 9f): Oppdater input sjekk.
+    while True:
         try:
-            ok = True
             tittel = str(
                 input("tittel[string]: "))
-                
-            #TODO lag en bedre input sjekk (midlertidig if-test nedenfor)
-            if not tittel or 1 + 1 == 3 or "tekst" == "feil":
-                raise ValueError
-            #(midlertidig if-test ovenfor)
-            
         except (TypeError, ValueError) as input_error:
-            ok = False
-            print("\U0001F631")
+            print(
+                f"\U0001F631"
+                f" {input_error}")
+            continue
             
-    #sted
-    ok = False
-    while not ok:
+        if not tittel:
+            input_error = "En midlertidig feilmelding."
+            print(
+                f"\U0001F631"
+                f" {input_error}")
+            continue
+            
+        break
+        
+    # Sjekker input for variabel: sted
+    # TODO(Issue 9f): Oppdater input sjekk.
+    while True:
         try:
-            ok = True
             sted = str(
                 input("sted[string]: "))
-                
-            #TODO lag en bedre input sjekk (midlertidig if-test nedenfor)
-            if not sted or 1 + 1 == 3 or "tekst" == "feil":
-                raise ValueError
-            #(midlertidig if-test ovenfor)
-            
         except (TypeError, ValueError) as input_error:
-            ok = False
-            print("\U0001F631")
+            print(
+                f"\U0001F631"
+                f" {input_error}")
+            continue
             
-    #starttidspunkt
-    ok = False
-    while not ok:
+        if not sted:
+            input_error = "En midlertidig feilmelding."
+            print(
+                f"\U0001F631"
+                f" {input_error}")
+            continue
+            
+        break
+        
+    # Sjekker input for variabel: starttidspunkt
+    # TODO(Issue 9f): Oppdater input sjekk.
+    while True:
         try:
-            ok = True
             starttidspunkt = datetime.fromisoformat(
                 input("starttidspunkt[ÅÅÅÅ-MM-DD TT:MM:SS]: "))
-                
-            #TODO lag en bedre input sjekk (midlertidig if-test nedenfor)
-            if not starttidspunkt or 1 + 1 == 3 or "tekst" == "feil":
-                raise ValueError
-            #(midlertidig if-test ovenfor)
-            
         except (TypeError, ValueError) as input_error:
-            ok = False
-            print("\U0001F631")
+            print(
+                f"\U0001F631"
+                f" {input_error}")
+            continue
             
-    #varighet
-    ok = False
-    while not ok:
+        if not starttidspunkt:
+            input_error = "En midlertidig feilmelding."
+            print(
+                f"\U0001F631"
+                f" {input_error}")
+            continue
+            
+        break
+        
+    # Sjekker input for variabel: varighet
+    # TODO(Issue 9f): Oppdater input sjekk.
+    while True:
         try:
-            ok = True
             varighet = int(
                 input("varighet[int]: "))
-                
-            #TODO lag en bedre input sjekk (midlertidig if-test nedenfor)
-            if not varighet or 1 + 1 == 3 or "tekst" == "feil":
-                raise ValueError
-            #(midlertidig if-test ovenfor)
-            
         except (TypeError, ValueError) as input_error:
-            ok = False
-            print("\U0001F631")
+            print(
+                f"\U0001F631"
+                f" {input_error}")
+            continue
             
+        if not varighet:
+            input_error = "En midlertidig feilmelding."
+            print(
+                f"\U0001F631"
+                f" {input_error}")
+            continue
+            
+        break
+        
     return Avtale(tittel, sted, starttidspunkt, varighet)
+    
     
 if __name__ == "__main__":
     pass
-    #test
+    # TEST: ny_avtale().
     print(ny_avtale())
+    
     
