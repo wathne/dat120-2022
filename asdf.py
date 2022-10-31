@@ -1,7 +1,19 @@
+"""Klasser og funksjoner for å lage avtaler.
+"""
+
 from datetime import datetime
 
 
 class Avtale:
+    """Representerer en avtale.
+
+    Attributes:
+        tittel: str
+        sted: str
+        starttidspunkt: datetime
+        varighet: int
+    """
+
     def __init__(
             self,
             tittel: str,
@@ -12,7 +24,7 @@ class Avtale:
         self.sted = sted
         self.starttidspunkt = starttidspunkt
         self.varighet = varighet
-        
+
     #TODO(Issue 9e): Lag en finere return string.
     def __str__(self) -> str:
         return (
@@ -20,14 +32,35 @@ class Avtale:
             f"sted: {self.sted}, "
             f"starttidspunkt: {self.starttidspunkt}, "
             f"varighet: {self.varighet}")
-            
+
+
 def ny_avtale() -> Avtale:
+    """Lager en ny Avtale.
+
+    Vil interaktivt be brukeren om å oppgi:
+        tittel: str,
+        sted: str,
+        starttidspunkt: datetime,
+        varighet: int.
+
+    Args:
+
+    Returns:
+        En Avtale med attributes:
+            tittel: str,
+            sted: str,
+            starttidspunkt: datetime,
+            varighet: int.
+
+    Raises:
+    """
+
     # Initialiserer variabler.
     tittel = str("-1")
     sted = str("-1")
     starttidspunkt = datetime.fromisoformat("0001-01-01 00:00:00")
     varighet = int(-1)
-    
+
     # Sjekker input for variabel: tittel
     # TODO(Issue 9f): Oppdater input sjekk.
     while True:
@@ -39,16 +72,14 @@ def ny_avtale() -> Avtale:
                 f"\U0001F631"
                 f" {input_error}")
             continue
-            
         if not tittel:
             input_error = "En midlertidig feilmelding."
             print(
                 f"\U0001F631"
                 f" {input_error}")
             continue
-            
         break
-        
+
     # Sjekker input for variabel: sted
     # TODO(Issue 9f): Oppdater input sjekk.
     while True:
@@ -60,16 +91,14 @@ def ny_avtale() -> Avtale:
                 f"\U0001F631"
                 f" {input_error}")
             continue
-            
         if not sted:
             input_error = "En midlertidig feilmelding."
             print(
                 f"\U0001F631"
                 f" {input_error}")
             continue
-            
         break
-        
+
     # Sjekker input for variabel: starttidspunkt
     # TODO(Issue 9f): Oppdater input sjekk.
     while True:
@@ -81,16 +110,14 @@ def ny_avtale() -> Avtale:
                 f"\U0001F631"
                 f" {input_error}")
             continue
-            
         if not starttidspunkt:
             input_error = "En midlertidig feilmelding."
             print(
                 f"\U0001F631"
                 f" {input_error}")
             continue
-            
         break
-        
+
     # Sjekker input for variabel: varighet
     # TODO(Issue 9f): Oppdater input sjekk.
     while True:
@@ -102,22 +129,20 @@ def ny_avtale() -> Avtale:
                 f"\U0001F631"
                 f" {input_error}")
             continue
-            
         if not varighet:
             input_error = "En midlertidig feilmelding."
             print(
                 f"\U0001F631"
                 f" {input_error}")
             continue
-            
         break
-        
+
     return Avtale(tittel, sted, starttidspunkt, varighet)
-    
-    
+
+
 if __name__ == "__main__":
     pass
     # TEST: ny_avtale().
     print(ny_avtale())
-    
-    
+
+
