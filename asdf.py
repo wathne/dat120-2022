@@ -145,4 +145,20 @@ if __name__ == "__main__":
     # TEST: ny_avtale().
     print(ny_avtale())
 
+# oppg. g:
 
+# Initialliserer variabler
+liste_over_avtaler = dict()
+
+def avtaleliste():
+    #Overskrift
+    print("Liste over Avtaler")
+    for x in liste_over_avtaler:
+        print(f"{x}: {liste_over_avtaler[x].tittel}")
+
+# Testinput for lang liste med avtaler med samme tid, men (litt) forskjellig tittel
+for i in range(24):
+    avtaletest = Avtale(f"Test{i}","Sted",datetime.fromisoformat("2002-04-24 23:24:24"),15)
+    liste_over_avtaler[i+1] = avtaletest
+    
+avtaleliste()
