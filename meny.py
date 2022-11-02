@@ -5,11 +5,12 @@ from os import name, system
 from typing import Any, Optional
 
 
-# TODO(Issue l): Fullfør docstring, clear() bør være disabled by default.
+_CLEAR_TERMINAL_ENABLED = False
+_DEBUG_ENABLED = False
+
+
 def _clear() -> None:
     """Clear the terminal screen.
-
-    F.eks.:
 
     Args:
 
@@ -24,11 +25,8 @@ def _clear() -> None:
         system("clear")  # Linux, Mac
 
 
-# TODO(Issue l): Fullfør docstring, try/except og diverse.
 class MenyValg():
     """Representerer et menyvalg.
-
-    F.eks.:
 
     Attributes:
         text: str
@@ -51,11 +49,8 @@ class MenyValg():
 
     # TODO(Issue l): def __str__(self) -> str:
 
-    # TODO(Issue l): Fullfør docstring, try/except og diverse.
     def run(self) -> None:
         """Kjører funksjonen til et menyvalg.
-
-        F.eks.:
 
         Args:
 
@@ -69,37 +64,39 @@ class MenyValg():
             pass
         else:
             # TODO(Issue l): Lag en try/except rundt denne.
-            # DEBUG(MenyValg.run()):
-            print("****************************************")
-            print(f"DEBUG: function: {self.function}")
-            print(f"DEBUG: arguments: {self.arguments}")
-            print("****************************************")
+            # DEBUG: MenyValg.run().
+            if _DEBUG_ENABLED:
+                print(f"DEBUG: function: {self.function}")
+                print(f"DEBUG: arguments: {self.arguments}")
             # self.arguments er en tuple med arguments.
             # *self.arguments (med ledende asterix) pakker ut arguments.
             self.function(*self.arguments)
 
-# TODO(Issue l): Fullfør docstring, try/except og diverse.
+
 class MenyListe():
     """Representerer en menyliste.
 
-    F.eks.:
+    For å lage en ny menyliste så må vi først initialisere en tom MenyList
+    og deretter bruker vi append() funksjonen for å legge til et MenyValg.
+
+    En MenyList er et mutable objekt. Den egenskapen er viktig for
+    at et MenyValg i test_meny_a skal kunne kjøre funksjonen
+    test_meny_b.show() og at et MenyValg i test_meny_b skal kunne
+    kjøre funksjonen test_meny_a.show().
+    (Sirkulær referanse mellom to menylister, a og b.)
+    (Obs! Traceback kan bli lang.)
 
     Attributes:
         entries: list[MenyValg]
     """
 
-    def __init__(
-            self,
-            entries: list[MenyValg]):
-        self.entries = entries
+    def __init__(self):
+        self.entries = []
 
     # TODO(Issue l): def __str__(self) -> str:
 
-    # TODO(Issue l): Fullfør docstring, try/except og diverse.
-    def _input(self) -> None:
-        """Ber brukeren om å velge et menyvalg fra menylisten.
-
-        F.eks.:
+    def append(self, entry: MenyValg) -> None:
+        """Legger et menyvalg til i menylisten.
 
         Args:
 
@@ -108,18 +105,27 @@ class MenyListe():
         Raises:
         """
 
-        # TODO(Issue l): Lag en try/except i en while loop.
+        self.entries.append(entry)
+
+    def _input(self) -> None:
+        """Ber brukeren om å velge et menyvalg fra menylisten.
+
+        Args:
+
+        Returns:
+
+        Raises:
+        """
+
+        # TODO(Issue l): Lag en try/except i en while loop rundt denne.
         user_input = int(
             input(f" > Skriv et tall [0-{len(self.entries) - 1}]: "))
         print(f"    > Du valgte "
               f"{self.entries[user_input].text}[{user_input}]")
         self.entries[user_input].run()
 
-    # TODO(Issue l): Fullfør docstring og diverse.
     def show(self) -> None:
         """Viser menylisten med menyvalg til brukeren.
-
-        F.eks.:
 
         Args:
 
@@ -128,7 +134,8 @@ class MenyListe():
         Raises:
         """
 
-        _clear()
+        if _CLEAR_TERMINAL_ENABLED:
+            _clear()
         print("----------------------------------------")
         for i, entry in enumerate(self.entries):
             print(f"{entry.text}[{i}]")
@@ -136,11 +143,9 @@ class MenyListe():
         self._input()
 
 
-# TODO(Issue l): Fullfør docstring, try/except og diverse.
+# TODO(Issue l): Fullfør docstring og diverse.
 def start_meny() -> None:
     """Starter et menysystem.
-
-    F.eks.:
 
     Args:
 
@@ -156,8 +161,6 @@ def start_meny() -> None:
 def _test_meny() -> None:
     """Tester et menysystem.
 
-    F.eks.:
-
     Args:
 
     Returns:
@@ -165,27 +168,50 @@ def _test_meny() -> None:
     Raises:
     """
 
-    # TODO(Issue l): test_meny_b is referenced before assignment.
-    test_meny_a = MenyListe([
-        MenyValg("Valg A1.", print, "Kjører A1."),
-        MenyValg("Valg A2.", print, "Kjører A2."),
-        MenyValg("Valg A3.", print, "Kjører A3."),
-        MenyValg("Meny B."),
-        MenyValg("Avslutt.")])
+    #global _CLEAR_TERMINAL_ENABLED
+    #_CLEAR_TERMINAL_ENABLED = True
 
-    test_meny_b = MenyListe([
-        MenyValg("Valg B1.", print, "Kjører B1."),
-        MenyValg("Valg B2.", print, "Kjører B2."),
-        MenyValg("Valg B3.", print, "Kjører B3."),
-        MenyValg("Meny A.", test_meny_a.show),
-        MenyValg("Avslutt.")])
+    #global _DEBUG_ENABLED
+    #_DEBUG_ENABLED = True
 
-    test_meny_b.show()
+    test_meny_a = MenyListe()
+    test_meny_b = MenyListe()
+    # DEBUG: _test_meny().
+    if _DEBUG_ENABLED:
+        print(f"DEBUG: id(test_meny_a): {id(test_meny_a)}")
+        print(f"DEBUG: id(test_meny_b): {id(test_meny_b)}")
+
+    test_meny_a.append(MenyValg("Valg A1.", print, "Kjører A1."))
+    test_meny_a.append(MenyValg("Valg A2.", print, "Kjører A2."))
+    test_meny_a.append(MenyValg("Valg A3.", print, "Kjører A3."))
+    test_meny_a.append(MenyValg("Valg A4.", print, "Kjører A4."))
+    test_meny_a.append(MenyValg("Meny B.", test_meny_b.show))
+    test_meny_a.append(MenyValg("Avslutt."))
+    # DEBUG: _test_meny().
+    if _DEBUG_ENABLED:
+        print(f"DEBUG: id(test_meny_a): {id(test_meny_a)}")
+        print(f"DEBUG: id(test_meny_b): {id(test_meny_b)}")
+
+    test_meny_b.append(MenyValg("Valg B1.", print, "Kjører B1."))
+    test_meny_b.append(MenyValg("Valg B2.", print, "Kjører B2."))
+    test_meny_b.append(MenyValg("Valg B3.", print, "Kjører B3."))
+    test_meny_b.append(MenyValg("Valg B4.", print, "Kjører B4."))
+    test_meny_b.append(MenyValg("Meny A.", test_meny_a.show))
+    test_meny_b.append(MenyValg("Avslutt."))
+    # DEBUG: _test_meny().
+    if _DEBUG_ENABLED:
+        print(f"DEBUG: id(test_meny_a): {id(test_meny_a)}")
+        print(f"DEBUG: id(test_meny_b): {id(test_meny_b)}")
+
+    test_meny_a.show()
+    #test_meny_b.show()
 
 
 if __name__ == "__main__":
     pass
     # TEST: _test_meny().
-    print(_test_meny())
+    _CLEAR_TERMINAL_ENABLED = True  # Obs!
+    _DEBUG_ENABLED = False
+    _test_meny()
 
 
