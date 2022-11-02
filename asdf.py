@@ -2,6 +2,7 @@
 """
 
 from datetime import datetime
+from typing import Optional
 
 
 class Avtale:
@@ -140,25 +141,69 @@ def ny_avtale() -> Avtale:
     return Avtale(tittel, sted, starttidspunkt, varighet)
 
 
+## oppg. g:
+#
+## Initialliserer variabler
+#liste_over_avtaler = dict()
+#
+#def avtaleliste():
+#    #Overskrift
+#    print("Liste over Avtaler")
+#    for x in liste_over_avtaler:
+#        print(f"{x}: {liste_over_avtaler[x].tittel}")
+#
+## Testinput for lang liste med avtaler med samme tid, men (litt) forskjellig tittel
+#for i in range(24):
+#    avtaletest = Avtale(f"Test{i}","Sted",datetime.fromisoformat("2002-04-24 23:24:24"),15)
+#    liste_over_avtaler[i+1] = avtaletest
+#    
+#avtaleliste()
+
+
+# TODO(Issue g): vis_avtaleliste().
+def vis_avtaleliste(
+        avtaleliste: list[Avtale],
+        overskrift: Optional[str] = None) -> None:
+    """Skriver ut ei liste med avtaler til skjermen.
+
+    Args:
+        avtaleliste: list[Avtale]
+        overskrift: Optional[str] = None
+
+    Returns:
+
+    Raises:
+    """
+
+    if overskrift is None:
+        pass  # Placeholder.
+    else:
+        pass  # Placeholder.
+
+
+def _test_avtaleliste() -> None:
+    """Tester vis_avtaleliste().
+
+    Args:
+
+    Returns:
+
+    Raises:
+    """
+
+    sample_avtaleliste = []
+
+    vis_avtaleliste(sample_avtaleliste)
+
+
 if __name__ == "__main__":
     pass
+
     # TEST: ny_avtale().
-    print(ny_avtale())
+    #test_avtale = ny_avtale()
+    #print(test_avtale)
 
-# oppg. g:
+    # TEST: vis_avtaleliste().
+    _test_avtaleliste()
 
-# Initialliserer variabler
-liste_over_avtaler = dict()
 
-def avtaleliste():
-    #Overskrift
-    print("Liste over Avtaler")
-    for x in liste_over_avtaler:
-        print(f"{x}: {liste_over_avtaler[x].tittel}")
-
-# Testinput for lang liste med avtaler med samme tid, men (litt) forskjellig tittel
-for i in range(24):
-    avtaletest = Avtale(f"Test{i}","Sted",datetime.fromisoformat("2002-04-24 23:24:24"),15)
-    liste_over_avtaler[i+1] = avtaletest
-    
-avtaleliste()
