@@ -5,8 +5,7 @@ from os import name, system
 from typing import Any, Optional
 
 
-_CLEAR_TERMINAL_ENABLED = False
-_DEBUG_ENABLED = False
+_debug_enabled = False
 
 
 def _clear() -> None:
@@ -30,7 +29,7 @@ class MenyValg():
 
     Attributes:
         text: str
-        function: object
+        function: object = None
         arguments: Optional[Any]
     """
 
@@ -65,7 +64,7 @@ class MenyValg():
         else:
             # TODO(Issue l): Lag en try/except rundt denne.
             # DEBUG: MenyValg.run().
-            if _DEBUG_ENABLED:
+            if _debug_enabled:
                 print(f"DEBUG: function: {self.function}")
                 print(f"DEBUG: arguments: {self.arguments}")
             # self.arguments er en tuple med arguments.
@@ -88,10 +87,14 @@ class MenyListe():
 
     Attributes:
         entries: list[MenyValg]
+        clear_terminal: bool = False
     """
 
-    def __init__(self):
+    def __init__(
+            self,
+            clear_terminal: bool = False):
         self.entries = []
+        self.clear_terminal = clear_terminal
 
     # TODO(Issue l): def __str__(self) -> str:
 
@@ -134,7 +137,7 @@ class MenyListe():
         Raises:
         """
 
-        if _CLEAR_TERMINAL_ENABLED:
+        if self.clear_terminal:
             _clear()
         print("----------------------------------------")
         for i, entry in enumerate(self.entries):
@@ -143,41 +146,23 @@ class MenyListe():
         self._input()
 
 
-# TODO(Issue l): Fullfør docstring og diverse.
-def start_meny() -> None:
-    """Starter et menysystem.
-
-    Args:
-
-    Returns:
-
-    Raises:
-    """
-
-    pass
-
-
 # TEST: _test_meny().
-def _test_meny() -> None:
+def _test_meny(clear_terminal: bool = False) -> None:
     """Tester et menysystem.
 
     Args:
+        clear_terminal: bool = False
+            (Clear the terminal screen.)
 
     Returns:
 
     Raises:
     """
 
-    #global _CLEAR_TERMINAL_ENABLED
-    #_CLEAR_TERMINAL_ENABLED = True
-
-    #global _DEBUG_ENABLED
-    #_DEBUG_ENABLED = True
-
-    test_meny_a = MenyListe()
-    test_meny_b = MenyListe()
+    test_meny_a = MenyListe(clear_terminal)
+    test_meny_b = MenyListe(clear_terminal)
     # DEBUG: _test_meny().
-    if _DEBUG_ENABLED:
+    if _debug_enabled:
         print(f"DEBUG: id(test_meny_a): {id(test_meny_a)}")
         print(f"DEBUG: id(test_meny_b): {id(test_meny_b)}")
 
@@ -188,7 +173,7 @@ def _test_meny() -> None:
     test_meny_a.append(MenyValg("Meny B.", test_meny_b.show))
     test_meny_a.append(MenyValg("Avslutt."))
     # DEBUG: _test_meny().
-    if _DEBUG_ENABLED:
+    if _debug_enabled:
         print(f"DEBUG: id(test_meny_a): {id(test_meny_a)}")
         print(f"DEBUG: id(test_meny_b): {id(test_meny_b)}")
 
@@ -199,19 +184,17 @@ def _test_meny() -> None:
     test_meny_b.append(MenyValg("Meny A.", test_meny_a.show))
     test_meny_b.append(MenyValg("Avslutt."))
     # DEBUG: _test_meny().
-    if _DEBUG_ENABLED:
+    if _debug_enabled:
         print(f"DEBUG: id(test_meny_a): {id(test_meny_a)}")
         print(f"DEBUG: id(test_meny_b): {id(test_meny_b)}")
 
     test_meny_a.show()
-    #test_meny_b.show()
 
 
 if __name__ == "__main__":
     pass
     # TEST: _test_meny().
-    _CLEAR_TERMINAL_ENABLED = True  # Obs!
-    _DEBUG_ENABLED = False
-    _test_meny()
+    _debug_enabled = True
+    _test_meny(clear_terminal = False)
 
 
