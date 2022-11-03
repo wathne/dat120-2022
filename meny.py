@@ -2,7 +2,7 @@
 """
 
 from os import name, system
-from typing import Any, Optional
+from typing import Any
 
 
 _debug_enabled = False
@@ -24,27 +24,24 @@ def _clear() -> None:
         system("clear")  # Linux, Mac
 
 
+# TODO(Issue l): Returner til meny etter funksjonskall.
 class MenyValg():
     """Representerer et menyvalg.
 
     Attributes:
         text: str
         function: object = None
-        arguments: Optional[Any]
+        arguments: tuple[Any, ...] = ()
     """
 
     def __init__(
             self,
             text: str,
             function: object = None,
-            /,
-            *args: Optional[Any]):
-            # /, PEP 570: pylint: disable=keyword-arg-before-vararg
-            #     (https://peps.python.org/pep-0570/)
-            # Er Optional[Any] riktig typing?
+            args: tuple[Any, ...] = ()):
         self.text = text
         self.function = function
-        self.arguments = args  # args er en tuple med arguments.
+        self.arguments = args
 
     # TODO(Issue l): def __str__(self) -> str:
 
@@ -166,23 +163,23 @@ def _test_meny(clear_terminal: bool = False) -> None:
         print(f"DEBUG: id(test_meny_a): {id(test_meny_a)}")
         print(f"DEBUG: id(test_meny_b): {id(test_meny_b)}")
 
-    test_meny_a.append(MenyValg("Valg A1.", print, "Kjører A1."))
-    test_meny_a.append(MenyValg("Valg A2.", print, "Kjører A2."))
-    test_meny_a.append(MenyValg("Valg A3.", print, "Kjører A3."))
-    test_meny_a.append(MenyValg("Valg A4.", print, "Kjører A4."))
-    test_meny_a.append(MenyValg("Meny B.", test_meny_b.show))
-    test_meny_a.append(MenyValg("Avslutt."))
+    test_meny_a.append(MenyValg("Valg A1.", print, ("Kjører A1.",)))
+    test_meny_a.append(MenyValg("Valg A2.", print, ("Kjører A2.",)))
+    test_meny_a.append(MenyValg("Valg A3.", print, ("Kjører A3.",)))
+    test_meny_a.append(MenyValg("Valg A4.", print, ("Kjører A4.",)))
+    test_meny_a.append(MenyValg("Meny B.", test_meny_b.show, ()))
+    test_meny_a.append(MenyValg("Avslutt.", None, ()))
     # DEBUG: _test_meny().
     if _debug_enabled:
         print(f"DEBUG: id(test_meny_a): {id(test_meny_a)}")
         print(f"DEBUG: id(test_meny_b): {id(test_meny_b)}")
 
-    test_meny_b.append(MenyValg("Valg B1.", print, "Kjører B1."))
-    test_meny_b.append(MenyValg("Valg B2.", print, "Kjører B2."))
-    test_meny_b.append(MenyValg("Valg B3.", print, "Kjører B3."))
-    test_meny_b.append(MenyValg("Valg B4.", print, "Kjører B4."))
-    test_meny_b.append(MenyValg("Meny A.", test_meny_a.show))
-    test_meny_b.append(MenyValg("Avslutt."))
+    test_meny_b.append(MenyValg("Valg B1.", print, ("Kjører B1.",)))
+    test_meny_b.append(MenyValg("Valg B2.", print, ("Kjører B2.",)))
+    test_meny_b.append(MenyValg("Valg B3.", print, ("Kjører B3.",)))
+    test_meny_b.append(MenyValg("Valg B4.", print, ("Kjører B4.",)))
+    test_meny_b.append(MenyValg("Meny A.", test_meny_a.show, ()))
+    test_meny_b.append(MenyValg("Avslutt.", None, ()))
     # DEBUG: _test_meny().
     if _debug_enabled:
         print(f"DEBUG: id(test_meny_a): {id(test_meny_a)}")
@@ -193,6 +190,7 @@ def _test_meny(clear_terminal: bool = False) -> None:
 
 if __name__ == "__main__":
     pass
+
     # TEST: _test_meny().
     _debug_enabled = True
     _test_meny(clear_terminal = False)
