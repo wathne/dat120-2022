@@ -33,24 +33,23 @@ class Avtale:
             f"varighet: {self.varighet}")
     
 
-# oppgave k:
-# Lag en funksjon som tar inn ei liste med avtaler og en streng, og
-# returnerer ei liste med alle avtaler hvor tittelen inneholder strengen. 
-# Dere kan bruke find-metoden for strenger til å finne en delstreng i en større streng.
-# https://www.w3schools.com/python/ref_string_find.asp
-# https://www.w3schools.com/python/python_iterators.asp
+# oppgave j) Lag en funksjon som tar inn ei liste med avtaler og en dato  
+# og returnerer ei liste med alle avtalene som foregår på denne datoen. 
+# Funksjonen trenger bare å sjekke om datoen stemmer med dato-delen av 
+# starttidspunktet til avtalen.
 
-def listestr(avtaleliste: list
-             , string: str):
-    str_sok_resultat = []       #ny liste som skal returneres på slutten av søket
+def listetid(avtaleliste: list
+             , tid: str):          
+    tid_sok_resultat = []       #ny liste som skal returneres på slutten av søket
     for avtale in avtaleliste: # leser hver avtale...
-        sjekk = avtale.tittel # lokalvariabel som kun har tittel info til hver avtale
-        if sjekk.find(string) >= 0: # sjekker om str finnes i hver avtale tittel, -1 : finnes ikke
-            print(avtale)       # ekstra sjekk slikk at den printer avtalen der str fantes, hele avtalen.
-            str_sok_resultat.append(avtale) # appender avtalen der den str finnes i avtalen tittelen
-    return str_sok_resultat     
+        sjekk = avtale.starttidspunkt # lokalvariabel som kun har datetime info til hver avtale
+        tiden = datetime.fromisoformat(tid)
+        if sjekk == tiden: # sjekker om tiden er akkurat likt det som søkes.
+            print(avtale)       # ekstra sjekk slikk at den printer avtalen der datetime fantes, hele avtalen.
+            tid_sok_resultat.append(avtale) # appender avtalen der den datetime finnes i avtalen datetime info
+    return tid_sok_resultat     
 
-if __name__ == "__main__": #eksempel på det at den søker kun str-tallet "2"
+if __name__ == "__main__": #eksempel på det at den søker samme dato som alle avtaletest er laget.
 
     # Lager først en tomt liste, slik at man får lage en Liste med Avtaler objekter slik hovedfilen har gjort
     # bare at hovedfilen har lagt en dictionary med avtaler istedetfor
@@ -58,5 +57,6 @@ if __name__ == "__main__": #eksempel på det at den søker kun str-tallet "2"
     for i in range(24):
         avtaletest = Avtale(f"Test{i}","Sted",datetime.fromisoformat("2002-04-24 23:24:24"),15)
         tester.append(avtaletest)
-
-    ggwp = listestr(tester,"2")
+    
+    ggwp = listetid(tester,"2002-04-24 23:24:24")
+    
