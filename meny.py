@@ -42,6 +42,7 @@ class MenyValg():
         self.text = text
         self.function = function
         self.arguments = args
+        self._parent = None
 
     # TODO(Issue l): def __str__(self) -> str:
 
@@ -56,8 +57,9 @@ class MenyValg():
         """
 
         if self.function is None:
+            pass  # Placeholder.
             # TODO(Issue l): Kjør en avsluttende funksjon.
-            pass
+            raise SystemExit("\U0001F92F Avslutter.")
         else:
             # TODO(Issue l): Lag en try/except rundt denne.
             # DEBUG: MenyValg.run().
@@ -67,6 +69,7 @@ class MenyValg():
             # self.arguments er en tuple med arguments.
             # *self.arguments (med ledende asterix) pakker ut arguments.
             self.function(*self.arguments)
+            self._parent.show()
 
 
 class MenyListe():
@@ -105,6 +108,7 @@ class MenyListe():
         Raises:
         """
 
+        entry._parent = self
         self.entries.append(entry)
 
     def _input(self) -> None:
