@@ -32,16 +32,16 @@ def lag_tekstfil(fil, listen):
             
 def fra_fil_til_liste(fil):
 
-tekst = open(fil, "r")
-liste = []
-for linjer in tekst:
-    linjer = linjer.rstrip()
-    linjer = linjer.replace(' ','')
-    linjer = linjer.split(',')
-    liste.append(linjer)
-summen = print(liste)
-tekst.close()
-return summen
+    tekst = open(fil, "r")
+    liste = []
+    for linjer in tekst:
+        linjer = linjer.rstrip()
+        linjer = linjer.replace(' ','')
+        linjer = linjer.split(',')
+        liste.append(linjer)
+    summen = print(liste)
+    tekst.close()
+    return summen
 
         
             
