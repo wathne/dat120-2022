@@ -24,7 +24,6 @@ def _clear() -> None:
         system("clear")  # Linux, Mac
 
 
-# TODO(Issue l): Returner til meny etter funksjonskall.
 class MenyValg():
     """Representerer et menyvalg.
 
@@ -32,6 +31,7 @@ class MenyValg():
         text: str
         function: object = None
         arguments: tuple[Any, ...] = ()
+        parent: MenyListe = None
     """
 
     def __init__(
@@ -42,7 +42,8 @@ class MenyValg():
         self.text = text
         self.function = function
         self.arguments = args
-        self._parent = None
+        # self.parent will be set to meny_x by meny_x.append().
+        self.parent = None
 
     # TODO(Issue l): def __str__(self) -> str:
 
@@ -54,6 +55,7 @@ class MenyValg():
         Returns:
 
         Raises:
+            SystemExit("\U0001F92F Avslutter.")
         """
 
         if self.function is None:
@@ -61,15 +63,21 @@ class MenyValg():
             # TODO(Issue l): Kjør en avsluttende funksjon.
             raise SystemExit("\U0001F92F Avslutter.")
         else:
-            # TODO(Issue l): Lag en try/except rundt denne.
             # DEBUG: MenyValg.run().
             if _debug_enabled:
                 print(f"DEBUG: function: {self.function}")
                 print(f"DEBUG: arguments: {self.arguments}")
+                print(f"DEBUG: parent: {self.parent}")
+            # TODO(Issue l): Lag en try/except rundt denne.
             # self.arguments er en tuple med arguments.
             # *self.arguments (med ledende asterix) pakker ut arguments.
             self.function(*self.arguments)
-            self._parent.show()
+            if self.parent is None:
+                pass  # Placeholder.
+                # TODO(Issue l): Kjør en avsluttende funksjon.
+                raise SystemExit("\U0001F92F Avslutter.")
+            else:
+                self.parent.show()
 
 
 class MenyListe():
@@ -108,7 +116,7 @@ class MenyListe():
         Raises:
         """
 
-        entry._parent = self
+        entry.parent = self
         self.entries.append(entry)
 
     def _input(self) -> None:
