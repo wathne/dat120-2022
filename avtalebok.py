@@ -1,7 +1,7 @@
 """Avtalebok.
 """
 
-from asdf import ny_avtale, vis_avtaleliste
+from asdf import Avtale, ny_avtale, vis_avtaleliste
 from meny import MenyValg, MenyListe
 
 
@@ -16,6 +16,10 @@ def _start_meny(clear_terminal: bool = False) -> None:
 
     Raises:
     """
+
+    # Initialize list[Avtale] and filepath.
+    avtaleliste = []
+    tekstfil = "./avtalebok.txt"
 
     # Initialize MenyListe.
     meny_a = MenyListe(clear_terminal)
