@@ -1,10 +1,36 @@
-def lag_tekstfil(fil, liste):
-    with open(fil, "w", 1, "UTF-8") as FILA:
-        for index in range(len(liste)):
-            FILA.writelines(liste[index].__repr__()+"\n")
-            FILA.close()
+def skriv_til_tekstfil(fil, listen):
 
-def avtale_til_tekst(filn):
+
+    avtale_liste = []
+    avtale_liste.append(str(listen))
+    with open(fil, "w", 1, "UTF-8") as ny_tekstfil:
+        ny_tekstfil.writelines(avtale_liste)
+        ny_tekstfil.close()
+        while True:
+            try:
+                print("tekstfil laget")
+            except ValueError:
+                print("that is not a correct file name: type ""name"".txt")
+            break
+            
+def lag_tekstfil(fil, listen):
+
+
+    avtale_liste = []
+    avtale_liste.append(str(listen))
+    with open(fil, "w", 1, "UTF-8") as ny_tekstfil:
+        for index in range(len(avtale_liste)):
+            ny_tekstfil.writelines(avtale_liste[index].__repr__()+"\n")
+            ny_tekstfil.close()
+        while True:
+            try:
+                print("tekstfil laget")
+            except ValueError:
+                print("that is not a correct file name: type ""name"".txt")
+            break
+
+            
+def liste_med_avtaler_fra_tekst(fil):
     while True:
         try:
             with open(filnavn, "r", 1, "UTF-8") as AVTALE:
