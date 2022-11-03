@@ -1,6 +1,6 @@
 from asdf import ny_avtale
 
-en_ny_avtale_3 = ny_avtale()
+_test1 = ny_avtale()
 
-print(en_ny_avtale_3)
+print(_test1)
 
