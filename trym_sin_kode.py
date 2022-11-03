@@ -5,6 +5,7 @@ def skriv_til_tekstfil(fil, listen):
     avtale_liste.append(str(listen))
     with open(fil, "w", 1, "UTF-8") as ny_tekstfil:
         ny_tekstfil.writelines(avtale_liste)
+        ny_tekstfil.write("\n")
         ny_tekstfil.close()
         while True:
             try:
