@@ -30,6 +30,21 @@ def lag_tekstfil(fil, listen):
             break
 
             
+def fra_fil_til_liste(fil):
+
+    tekst = open(fil, "r")
+    liste = []
+    for linjer in tekst:
+        linjer = linjer.rstrip()
+        linjer = linjer.replace(' ','')
+        linjer = linjer.split(',')
+        liste.append(linjer)
+    summen = print(liste)
+    tekst.close()
+    return summen
+
+        
+            
 def liste_med_avtaler_fra_tekst(fil):
     while True:
         try:
@@ -48,3 +63,4 @@ def liste_med_avtaler_fra_tekst(fil):
             AVTALE.close()
             break
     return liste_med_avtaler
+

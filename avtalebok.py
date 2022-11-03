@@ -19,6 +19,7 @@ def _start_meny(clear_terminal: bool = False) -> None:
 
     # Initialize list[Avtale] and filepath.
     avtaleliste = []
+    overskrift = None
     tekstfil = "./avtalebok.txt"
 
     # Initialize MenyListe.
@@ -29,7 +30,7 @@ def _start_meny(clear_terminal: bool = False) -> None:
     # MenyValg function- and arguments-placeholders.
     show_all_avtale_text = "Vis alle avtaler."
     show_all_avtale_func = vis_avtaleliste
-    show_all_avtale_args = ([],)  # TODO(Issue l): Avtaleliste som arg.
+    show_all_avtale_args = (avtaleliste, overskrift,)
     read_file_text = "Les avtaler fra fil."
     read_file_func = print
     read_file_args = ("Placeholder: Leser avtaler fra fil.",)

@@ -141,45 +141,25 @@ def ny_avtale() -> Avtale:
     return Avtale(tittel, sted, starttidspunkt, varighet)
 
 
-# oppg. g:
+# TODO(Issue g): vis_avtaleliste().
+def vis_avtaleliste(
+        avtaleliste: list[Avtale],
+        overskrift: Optional[str] = None) -> None:
+    """Skriver ut ei liste med avtaler til skjermen.
 
-# Initialliserer variabler
-liste_over_avtaler = list()
+    Args:
+        avtaleliste: list[Avtale]
+        overskrift: Optional[str] = None
 
-def vis_avtaleliste(avtaleliste,overskrift = "Liste over Avtaler"):
-    #Overskrift
-    print(overskrift)
-    index = 1
-    for x in avtaleliste:
-        print(f"{index}: {x}")
-        index += 1
+    Returns:
 
-# Testinput for lang liste med avtaler med samme tid, men (litt) forskjellig tittel
-for i in range(24):
-    avtaletest = Avtale(f"Test{i}",f"Sted{i}",datetime.fromisoformat("2002-04-24 23:24:24"),15+i)
-    liste_over_avtaler.append(avtaletest)
+    Raises:
+    """
 
-vis_avtaleliste(liste_over_avtaler)
-
-# # TODO(Issue g): vis_avtaleliste().
-# def vis_avtaleliste(
-#         avtaleliste: list,
-#         overskrift: str = None) -> None:
-#     """Skriver ut ei liste med avtaler til skjermen.
-
-#     Args:
-#         avtaleliste: list[Avtale]
-#         overskrift: Optional[str] = None
-
-#     Returns:
-
-#     Raises:
-#     """
-
-#     if overskrift is None:
-#         pass  # Placeholder.
-#     else:
-#         pass  # Placeholder.
+    if overskrift is None:
+        pass  # Placeholder.
+    else:
+        pass  # Placeholder.
 
 
 def _test_avtaleliste() -> None:
