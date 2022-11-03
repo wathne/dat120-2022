@@ -1,10 +1,10 @@
-def lag_tekstfil(filnavn):
-    with open(filnavn, "w", 1, "UTF-8") as FILA:
-        for index in range(len(Intern_liste)):
-            FILA.writelines(Intern_liste[index].__repr__()+"\n")
+def lag_tekstfil(fil, liste):
+    with open(fil, "w", 1, "UTF-8") as FILA:
+        for index in range(len(liste)):
+            FILA.writelines(liste[index].__repr__()+"\n")
             FILA.close()
 
-def avtale_til_tekst(filnavn):
+def avtale_til_tekst(filn):
     while True:
         try:
             with open(filnavn, "r", 1, "UTF-8") as AVTALE:
@@ -18,7 +18,7 @@ def avtale_til_tekst(filnavn):
                 sted = sted.strip()
                 starttidspunkt = starttidspunkt.strip()
                 varighet = varighet.strip()
-                Intern_liste[tittel] = (tittel + ", " + sted + ", " + starttidspunkt + ", " + varighet)
+                liste_med_avtaler[tittel] = (tittel + ", " + sted + ", " + starttidspunkt + ", " + varighet)
             AVTALE.close()
             break
-    return Intern_liste
+    return liste_med_avtaler
