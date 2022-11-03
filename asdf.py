@@ -36,7 +36,7 @@ class Avtale:
 
 
 def ny_avtale() -> Avtale:
-    """Lager en ny Avtale.
+    """Lager en ny avtale.
 
     Vil interaktivt be brukeren om å oppgi:
         tittel: str,
@@ -141,7 +141,26 @@ def ny_avtale() -> Avtale:
     return Avtale(tittel, sted, starttidspunkt, varighet)
 
 
-# TODO(Issue g): vis_avtaleliste().
+def ny_avtale_til_avtaleliste(
+        avtaleliste: list[Avtale]) -> None:
+    """Lager en ny avtale og legger avtalen til i en avtaleliste.
+
+    Vil interaktivt be brukeren om å oppgi:
+        tittel: str,
+        sted: str,
+        starttidspunkt: datetime,
+        varighet: int.
+
+    Args:
+
+    Returns:
+
+    Raises:
+    """
+
+    avtaleliste.append(ny_avtale())
+
+
 def vis_avtaleliste(
         avtaleliste: list[Avtale],
         overskrift: Optional[str] = None) -> None:
@@ -157,12 +176,68 @@ def vis_avtaleliste(
     """
 
     if overskrift is None:
-        pass  # Placeholder.
+        pass
     else:
-        pass  # Placeholder.
+        print(overskrift)
+    for i, avtale in enumerate(avtaleliste):
+        print(f"[{i}]{avtale}")
 
 
-def _test_avtaleliste() -> None:
+def skriv_til_tekstfil(
+        avtaleliste: list[Avtale],
+        tekstfil: str = "./avtalebok.txt") -> None:
+    """Lagrer ei liste med avtaler til ei tekstfil.
+
+    Args:
+        avtaleliste: list[Avtale]
+        tekstfil: str = "./avtalebok.txt"
+
+    Returns:
+
+    Raises:
+    """
+
+    with open(tekstfil, mode="w", encoding="utf-8") as txt_file:
+        txt_file.truncate(0)
+        for avtale in avtaleliste:
+            txt_file.write(
+                f"{avtale.tittel};"
+                f"{avtale.sted};"
+                f"{avtale.starttidspunkt};"
+                f"{avtale.varighet}")
+            txt_file.write("\n")
+        txt_file.close()
+
+
+def les_fra_tekstfil(
+        avtaleliste: list[Avtale],
+        tekstfil: str = "./avtalebok.txt") -> None:
+    """Leser inn ei liste med avtaler fra ei tekstfil.
+
+    Args:
+        avtaleliste: list[Avtale]
+        tekstfil: str = "./avtalebok.txt"
+
+    Returns:
+
+    Raises:
+    """
+
+    with open(tekstfil, mode="r", encoding="utf-8") as txt_file:
+        avtaleliste.clear()
+        for line in txt_file:
+            line = line.strip("\n")
+            line = line.split(";")
+            tittel = line[0]
+            sted = line[1]
+            starttidspunkt = line[2]
+            varighet = line[3]
+            avtaleliste.append(
+                Avtale(tittel, sted, starttidspunkt, varighet))
+        txt_file.close()
+
+
+def _test_vis_avtaleliste() -> None:
     """Tester vis_avtaleliste().
 
     Args:
@@ -172,9 +247,37 @@ def _test_avtaleliste() -> None:
     Raises:
     """
 
-    sample_avtaleliste = []
+    pass
 
-    vis_avtaleliste(sample_avtaleliste)
+    #sample_avtaleliste = []
+
+    #vis_avtaleliste(sample_avtaleliste)
+
+
+def _test_skriv_til_tekstfil() -> None:
+    """Tester skriv_til_tekstfil().
+
+    Args:
+
+    Returns:
+
+    Raises:
+    """
+
+    pass
+
+
+def _test_les_fra_tekstfil() -> None:
+    """Tester les_fra_tekstfil().
+
+    Args:
+
+    Returns:
+
+    Raises:
+    """
+
+    pass
 
 
 if __name__ == "__main__":
@@ -185,6 +288,12 @@ if __name__ == "__main__":
     #print(test_avtale)
 
     # TEST: vis_avtaleliste().
-    _test_avtaleliste()
+    #_test_vis_avtaleliste()
+
+    # TEST: skriv_til_tekstfil().
+    #_test_skriv_til_tekstfil()
+
+    # TEST: les_fra_tekstfil().
+    #_test_les_fra_tekstfil()
 
 

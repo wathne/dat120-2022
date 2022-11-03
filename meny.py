@@ -5,7 +5,7 @@ from os import name, system
 from typing import Any
 
 
-_debug_enabled = False
+_debug_enabled = True
 
 
 def _clear() -> None:
@@ -32,6 +32,7 @@ class MenyValg():
         function: object = None
         arguments: tuple[Any, ...] = ()
         parent: MenyListe = None
+        storage: Any = None
     """
 
     def __init__(
@@ -44,6 +45,7 @@ class MenyValg():
         self.arguments = args
         # self.parent will be set to meny_x by meny_x.append().
         self.parent = None
+        self.storage = None
 
     # TODO(Issue l): def __str__(self) -> str:
 
@@ -69,9 +71,13 @@ class MenyValg():
                 print(f"DEBUG: arguments: {self.arguments}")
                 print(f"DEBUG: parent: {self.parent}")
             # TODO(Issue l): Lag en try/except rundt denne.
-            # self.arguments er en tuple med arguments.
-            # *self.arguments (med ledende asterix) pakker ut arguments.
-            self.function(*self.arguments)
+            # self.arguments is a tuple of arguments.
+            # *self.arguments (with leading asterix) unpacks the arguments.
+            # self.storage grabs the return of self.function(*self.arguments).
+            self.storage = self.function(*self.arguments)
+            # DEBUG: MenyValg.run().
+            if _debug_enabled:
+                print(f"DEBUG: storage: {self.storage}")
             if self.parent is None:
                 pass  # Placeholder.
                 # TODO(Issue l): Kjør en avsluttende funksjon.
@@ -131,9 +137,11 @@ class MenyListe():
 
         # TODO(Issue l): Lag en try/except i en while loop rundt denne.
         user_input = int(
-            input(f" > Skriv et tall [0-{len(self.entries) - 1}]: "))
-        print(f"    > Du valgte "
-              f"{self.entries[user_input].text}[{user_input}]")
+            input(f" > Skriv et tall "
+                  f"[0-{len(self.entries) - 1}]: "))
+        print(f"    > Du valgte: "
+              f"[{user_input}]"
+              f"{self.entries[user_input].text}")
         self.entries[user_input].run()
 
     def show(self) -> None:
@@ -150,7 +158,7 @@ class MenyListe():
             _clear()
         print("----------------------------------------")
         for i, entry in enumerate(self.entries):
-            print(f"{entry.text}[{i}]")
+            print(f"[{i}]{entry.text}")
         print("----------------------------------------")
         self._input()
 
@@ -175,23 +183,59 @@ def _test_meny(clear_terminal: bool = False) -> None:
         print(f"DEBUG: id(test_meny_a): {id(test_meny_a)}")
         print(f"DEBUG: id(test_meny_b): {id(test_meny_b)}")
 
-    test_meny_a.append(MenyValg("Valg A1.", print, ("Kjører A1.",)))
-    test_meny_a.append(MenyValg("Valg A2.", print, ("Kjører A2.",)))
-    test_meny_a.append(MenyValg("Valg A3.", print, ("Kjører A3.",)))
-    test_meny_a.append(MenyValg("Valg A4.", print, ("Kjører A4.",)))
-    test_meny_a.append(MenyValg("Meny B.", test_meny_b.show, ()))
-    test_meny_a.append(MenyValg("Avslutt.", None, ()))
+    test_meny_a.append(MenyValg(
+        "Valg A1.",
+        print,
+        ("Kjører A1.",)))
+    test_meny_a.append(MenyValg(
+        "Valg A2.",
+        print,
+        ("Kjører A2.",)))
+    test_meny_a.append(MenyValg(
+        "Valg A3.",
+        print,
+        ("Kjører A3.",)))
+    test_meny_a.append(MenyValg(
+        "Valg A4.",
+        print,
+        ("Kjører A4.",)))
+    test_meny_a.append(MenyValg(
+        "Meny B.",
+        test_meny_b.show,
+        ()))
+    test_meny_a.append(MenyValg(
+        "Avslutt.",
+        None,
+        ()))
     # DEBUG: _test_meny().
     if _debug_enabled:
         print(f"DEBUG: id(test_meny_a): {id(test_meny_a)}")
         print(f"DEBUG: id(test_meny_b): {id(test_meny_b)}")
 
-    test_meny_b.append(MenyValg("Valg B1.", print, ("Kjører B1.",)))
-    test_meny_b.append(MenyValg("Valg B2.", print, ("Kjører B2.",)))
-    test_meny_b.append(MenyValg("Valg B3.", print, ("Kjører B3.",)))
-    test_meny_b.append(MenyValg("Valg B4.", print, ("Kjører B4.",)))
-    test_meny_b.append(MenyValg("Meny A.", test_meny_a.show, ()))
-    test_meny_b.append(MenyValg("Avslutt.", None, ()))
+    test_meny_b.append(MenyValg(
+        "Valg B1.",
+        print,
+        ("Kjører B1.",)))
+    test_meny_b.append(MenyValg(
+        "Valg B2.",
+        print,
+        ("Kjører B2.",)))
+    test_meny_b.append(MenyValg(
+        "Valg B3.",
+        print,
+        ("Kjører B3.",)))
+    test_meny_b.append(MenyValg(
+        "Valg B4.",
+        print,
+        ("Kjører B4.",)))
+    test_meny_b.append(MenyValg(
+        "Meny A.",
+        test_meny_a.show,
+        ()))
+    test_meny_b.append(MenyValg(
+        "Avslutt.",
+        None,
+        ()))
     # DEBUG: _test_meny().
     if _debug_enabled:
         print(f"DEBUG: id(test_meny_a): {id(test_meny_a)}")
@@ -205,6 +249,6 @@ if __name__ == "__main__":
 
     # TEST: _test_meny().
     _debug_enabled = True
-    _test_meny(clear_terminal = False)
+    _test_meny(clear_terminal=False)
 
 
