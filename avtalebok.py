@@ -5,9 +5,11 @@ chmod a+rwx ./test_avtalebok.txt
 chmod a+rwx ./backup_test_avtalebok.txt
 """
 
+from asdf import endre_avtale_fra_avtaleliste
 from asdf import les_fra_tekstfil
 from asdf import ny_avtale_til_avtaleliste
 from asdf import skriv_til_tekstfil
+from asdf import slett_avtale_fra_avtaleliste
 from asdf import vis_avtaleliste
 from meny import MenyListe
 from meny import MenyValg
@@ -55,11 +57,11 @@ def _start_meny(clear_terminal: bool = False) -> None:
     create_avtale_func = ny_avtale_til_avtaleliste
     create_avtale_args = (avtaleliste,)
     edit_avtale_text = "Rediger en avtale."
-    edit_avtale_func = print
-    edit_avtale_args = ("Placeholder: Redigerer en avtale.",)
+    edit_avtale_func = endre_avtale_fra_avtaleliste
+    edit_avtale_args = (avtaleliste,)
     delete_avtale_text = "Slett en avtale."
-    delete_avtale_func = print
-    delete_avtale_args = ("Placeholder: Sletter en avtale.",)
+    delete_avtale_func = slett_avtale_fra_avtaleliste
+    delete_avtale_args = (avtaleliste,)
 
     # Populate MenyListe A with MenyValg.
     meny_a.append(MenyValg(

@@ -2,7 +2,7 @@
 """
 
 from os import name, system
-from typing import Any
+from typing import Any, Optional
 
 
 _debug_enabled = True
@@ -29,22 +29,23 @@ class MenyValg():
 
     Attributes:
         text: str
-        function: object = None
+        function: Optional[object] = None
         arguments: tuple[Any, ...] = ()
         parent: MenyListe = None
-        storage: Any = None
+        storage: Optional[Any] = None
     """
 
     def __init__(
             self,
             text: str,
-            function: object = None,
+            function: Optional[object] = None,
             args: tuple[Any, ...] = ()):
         self.text = text
         self.function = function
         self.arguments = args
         # self.parent will be set to meny_x by meny_x.append().
         self.parent = None
+        # self.storage grabs the return of self.function(*self.arguments).
         self.storage = None
 
     # TODO(Issue l): def __str__(self) -> str:
@@ -83,6 +84,14 @@ class MenyValg():
                 # TODO(Issue l): Kjør en avsluttende funksjon.
                 raise SystemExit("\U0001F92F Avslutter.")
             else:
+                # DEBUG: MenyValg.run().
+                if _debug_enabled:
+                    print(f"DEBUG: id(storage): {id(self.storage)}")
+                self.parent.storage = self.storage
+                # DEBUG: MenyValg.run().
+                if _debug_enabled:
+                    print(f"DEBUG: id(parent.storage): "
+                          f"{id(self.parent.storage)}")
                 self.parent.show()
 
 
@@ -102,6 +111,7 @@ class MenyListe():
     Attributes:
         entries: list[MenyValg]
         clear_terminal: bool = False
+        storage: Optional[Any] = None
     """
 
     def __init__(
@@ -109,6 +119,9 @@ class MenyListe():
             clear_terminal: bool = False):
         self.entries = []
         self.clear_terminal = clear_terminal
+        # self.storage will be set by valg_x.run().
+        # self.storage grabs the return of valg_x.function(*valg_x.arguments).
+        self.storage = None
 
     # TODO(Issue l): def __str__(self) -> str:
 
@@ -153,6 +166,10 @@ class MenyListe():
 
         Raises:
         """
+
+        # DEBUG: MenyListe.show().
+        if _debug_enabled:
+            print(f"DEBUG: id(@MenyListe.show() storage):{id(self.storage)}")
 
         if self.clear_terminal:
             _clear()
@@ -200,7 +217,7 @@ def _test_meny(clear_terminal: bool = False) -> None:
         print,
         ("Kjører A4.",)))
     test_meny_a.append(MenyValg(
-        "Meny B.",
+        "B meny.",
         test_meny_b.show,
         ()))
     test_meny_a.append(MenyValg(
@@ -229,7 +246,7 @@ def _test_meny(clear_terminal: bool = False) -> None:
         print,
         ("Kjører B4.",)))
     test_meny_b.append(MenyValg(
-        "Meny A.",
+        "A meny.",
         test_meny_a.show,
         ()))
     test_meny_b.append(MenyValg(

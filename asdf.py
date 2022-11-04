@@ -5,6 +5,9 @@ from datetime import datetime
 from typing import Optional
 
 
+_debug_enabled = True
+
+
 class Avtale:
     """Representerer en avtale.
 
@@ -142,7 +145,7 @@ def ny_avtale() -> Avtale:
 
 
 def ny_avtale_til_avtaleliste(
-        avtaleliste: list[Avtale]) -> None:
+        avtaleliste: list[Avtale]) -> list[Avtale]:
     """Lager en ny avtale og legger avtalen til i en avtaleliste.
 
     Vil interaktivt be brukeren om å oppgi:
@@ -151,48 +154,77 @@ def ny_avtale_til_avtaleliste(
         starttidspunkt: datetime,
         varighet: int.
 
+    En avtaleliste er mutable. Vi bevarer id(avtaleliste).
+    Det er ikke nødvendig å ta imot returverdien.
+    id(avtaleliste) er identisk før og etter
+    ny_avtale_til_avtaleliste().
+
     Args:
+        avtaleliste: list[Avtale]
 
     Returns:
+        avtaleliste: list[Avtale]
 
     Raises:
     """
 
     avtaleliste.append(ny_avtale())
 
+    # DEBUG: ny_avtale_til_avtaleliste().
+    if _debug_enabled:
+        print(f"DEBUG: id(@ny_avtale_til_avtaleliste() avtaleliste): "
+              f"{id(avtaleliste)}")
+
+    return avtaleliste
+
 
 def vis_avtaleliste(
         avtaleliste: list[Avtale],
-        overskrift: Optional[str] = None) -> None:
+        overskrift: Optional[str] = None) -> list[Avtale]:
     """Skriver ut ei liste med avtaler til skjermen.
+
+    En avtaleliste er mutable. Vi bevarer id(avtaleliste).
+    Det er ikke nødvendig å ta imot returverdien.
+    id(avtaleliste) er identisk før og etter vis_avtaleliste().
 
     Args:
         avtaleliste: list[Avtale]
         overskrift: Optional[str] = None
 
     Returns:
+        avtaleliste: list[Avtale]
 
     Raises:
     """
 
-    if overskrift is None:
-        pass
-    else:
+    if overskrift is not None:
         print(overskrift)
     for i, avtale in enumerate(avtaleliste):
         print(f"[{i}]{avtale}")
 
+    # DEBUG: vis_avtaleliste().
+    if _debug_enabled:
+        print(f"DEBUG: id(@vis_avtaleliste() avtaleliste): "
+              f"{id(avtaleliste)}")
+
+    return avtaleliste
+
 
 def skriv_til_tekstfil(
         avtaleliste: list[Avtale],
-        tekstfil: str = "./avtalebok.txt") -> None:
+        tekstfil: str = "./avtalebok.txt") -> list[Avtale]:
     """Lagrer ei liste med avtaler til ei tekstfil.
+
+    En avtaleliste er mutable. Vi bevarer id(avtaleliste).
+    Det er ikke nødvendig å ta imot returverdien.
+    id(avtaleliste) er identisk før og etter skriv_til_tekstfil().
 
     Args:
         avtaleliste: list[Avtale]
         tekstfil: str = "./avtalebok.txt"
 
     Returns:
+        avtaleliste: list[Avtale]
 
     Raises:
     """
@@ -208,17 +240,29 @@ def skriv_til_tekstfil(
             txt_file.write("\n")
         txt_file.close()
 
+    # DEBUG: skriv_til_tekstfil().
+    if _debug_enabled:
+        print(f"DEBUG: id(@skriv_til_tekstfil() avtaleliste): "
+              f"{id(avtaleliste)}")
+
+    return avtaleliste
+
 
 def les_fra_tekstfil(
         avtaleliste: list[Avtale],
-        tekstfil: str = "./avtalebok.txt") -> None:
+        tekstfil: str = "./avtalebok.txt") -> list[Avtale]:
     """Leser inn ei liste med avtaler fra ei tekstfil.
+
+    En avtaleliste er mutable. Vi bevarer id(avtaleliste).
+    Det er ikke nødvendig å ta imot returverdien.
+    id(avtaleliste) er identisk før og etter les_fra_tekstfil().
 
     Args:
         avtaleliste: list[Avtale]
         tekstfil: str = "./avtalebok.txt"
 
     Returns:
+        avtaleliste: list[Avtale]
 
     Raises:
     """
@@ -235,6 +279,152 @@ def les_fra_tekstfil(
             avtaleliste.append(
                 Avtale(tittel, sted, starttidspunkt, varighet))
         txt_file.close()
+
+    # DEBUG: les_fra_tekstfil().
+    if _debug_enabled:
+        print(f"DEBUG: id(@les_fra_tekstfil() avtaleliste): "
+              f"{id(avtaleliste)}")
+
+    return avtaleliste
+
+
+def slett_avtale_fra_avtaleliste(
+        avtaleliste: list[Avtale]) -> list[Avtale]:
+    """Sletter en avtale fra en avtaleliste.
+
+    Vil interaktivt be brukeren om å velge en avtale som skal slettes.
+    Brukeren får også et valg om å gå tilbake uten å slette en avtale.
+
+    En avtaleliste er mutable. Vi bevarer id(avtaleliste).
+    Det er ikke nødvendig å ta imot returverdien.
+    id(avtaleliste) er identisk før og etter
+    slett_avtale_fra_avtaleliste().
+
+    Args:
+        avtaleliste: list[Avtale]
+
+    Returns:
+        avtaleliste: list[Avtale]
+
+    Raises:
+    """
+
+    # To skip deletion, simply set: slett = len(avtaleliste).
+    slett = len(avtaleliste)
+
+    vis_avtaleliste(avtaleliste, "Slett en avtale fra avtalelisten:")
+    print(f"[{len(avtaleliste)}]Gå tilbake uten å slette en avtale.")
+
+    input_error = (f"\U0001F631 "
+                   f"Skriv et heltall [0-{len(avtaleliste)}]")
+    while True:
+        try:
+            slett = int(
+                input("Slett[int]: "))
+        except (TypeError, ValueError):
+            print(input_error)
+            continue
+        if not slett and slett != 0:
+            print(input_error)
+            continue
+        if not 0 <= slett <= len(avtaleliste):
+            print(input_error)
+            continue
+        break
+
+    # DEBUG: slett_avtale_fra_avtaleliste().
+    if _debug_enabled:
+        print(f"DEBUG: id(@slett_avtale_fra_avtaleliste() avtaleliste): "
+              f"{id(avtaleliste)}")
+
+    # Rebuild avtaleliste without breaking id(avtaleliste).
+    # To skip deletion, simply set: slett = len(avtaleliste).
+    temp_avtaleliste = []
+    for i, avtale in enumerate(avtaleliste):
+        if i != slett:
+            temp_avtaleliste.append(avtale)
+    avtaleliste.clear()
+    for avtale in temp_avtaleliste:
+        avtaleliste.append(avtale)
+
+    # DEBUG: slett_avtale_fra_avtaleliste().
+    if _debug_enabled:
+        print(f"DEBUG: id(@slett_avtale_fra_avtaleliste() avtaleliste): "
+              f"{id(avtaleliste)}")
+
+    return avtaleliste
+
+
+def endre_avtale_fra_avtaleliste(
+        avtaleliste: list[Avtale]) -> list[Avtale]:
+    """Endrer en avtale fra en avtaleliste.
+
+    Vil interaktivt be brukeren om å velge en avtale som skal endres.
+    Brukeren får også et valg om å gå tilbake uten å endre en avtale.
+
+    En avtaleliste er mutable. Vi bevarer id(avtaleliste).
+    Det er ikke nødvendig å ta imot returverdien.
+    id(avtaleliste) er identisk før og etter
+    endre_avtale_fra_avtaleliste().
+
+    Args:
+        avtaleliste: list[Avtale]
+
+    Returns:
+        avtaleliste: list[Avtale]
+
+    Raises:
+    """
+
+    # To skip change, simply set: endre = len(avtaleliste).
+    endre = len(avtaleliste)
+
+    vis_avtaleliste(avtaleliste, "Endre en avtale fra avtalelisten:")
+    print(f"[{len(avtaleliste)}]Gå tilbake uten å endre en avtale.")
+
+    input_error = (f"\U0001F631 "
+                   f"Skriv et heltall [0-{len(avtaleliste)}]")
+    while True:
+        try:
+            endre = int(
+                input("Endre[int]: "))
+        except (TypeError, ValueError):
+            print(input_error)
+            continue
+        if not endre and endre != 0:
+            print(input_error)
+            continue
+        if not 0 <= endre <= len(avtaleliste):
+            print(input_error)
+            continue
+        break
+
+    if endre != len(avtaleliste):
+        temp_avtale = ny_avtale()
+
+    # DEBUG: endre_avtale_fra_avtaleliste().
+    if _debug_enabled:
+        print(f"DEBUG: id(@endre_avtale_fra_avtaleliste() avtaleliste): "
+              f"{id(avtaleliste)}")
+
+    # Rebuild avtaleliste without breaking id(avtaleliste).
+    # To skip change, simply set: endre = len(avtaleliste).
+    temp_avtaleliste = []
+    for i, avtale in enumerate(avtaleliste):
+        if i != endre:
+            temp_avtaleliste.append(avtale)
+        if i == endre:
+            temp_avtaleliste.append(temp_avtale)
+    avtaleliste.clear()
+    for avtale in temp_avtaleliste:
+        avtaleliste.append(avtale)
+
+    # DEBUG: endre_avtale_fra_avtaleliste().
+    if _debug_enabled:
+        print(f"DEBUG: id(@endre_avtale_fra_avtaleliste() avtaleliste): "
+              f"{id(avtaleliste)}")
+
+    return avtaleliste
 
 
 def _test_vis_avtaleliste() -> None:
@@ -280,6 +470,32 @@ def _test_les_fra_tekstfil() -> None:
     pass
 
 
+def _test_slett_avtale_fra_avtaleliste() -> None:
+    """Tester slett_avtale_fra_avtaleliste().
+
+    Args:
+
+    Returns:
+
+    Raises:
+    """
+
+    pass
+
+
+def _test_endre_avtale_fra_avtaleliste() -> None:
+    """Tester endre_avtale_fra_avtaleliste().
+
+    Args:
+
+    Returns:
+
+    Raises:
+    """
+
+    pass
+
+
 if __name__ == "__main__":
     pass
 
@@ -295,5 +511,11 @@ if __name__ == "__main__":
 
     # TEST: les_fra_tekstfil().
     #_test_les_fra_tekstfil()
+
+    # TEST: slett_avtale_fra_avtaleliste().
+    #_test_slett_avtale_fra_avtaleliste
+
+    # TEST: endre_avtale_fra_avtaleliste().
+    #_test_endre_avtale_fra_avtaleliste
 
 
