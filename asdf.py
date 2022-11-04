@@ -400,6 +400,7 @@ def endre_avtale_fra_avtaleliste(
         break
 
     if endre != len(avtaleliste):
+        print(f"{avtaleliste[endre]}")
         temp_avtale = ny_avtale()
 
     # DEBUG: endre_avtale_fra_avtaleliste().
