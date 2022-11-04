@@ -44,7 +44,7 @@ def listetid(avtaleliste: list
     for avtale in avtaleliste: # leser hver avtale...
         sjekk = avtale.starttidspunkt # lokalvariabel som kun har datetime info til hver avtale
         tiden = datetime.fromisoformat(tid)
-        if sjekk == tiden: # sjekker om tiden er akkurat likt det som søkes.
+        if sjekk.strftime("%m/%d/%Y") == tiden.strftime("%m/%d/%Y"): # sjekker om tiden er akkurat likt det som søkes.
             print(avtale)       # ekstra sjekk slikk at den printer avtalen der datetime fantes, hele avtalen.
             tid_sok_resultat.append(avtale) # appender avtalen der den datetime finnes i avtalen datetime info
     return tid_sok_resultat     
