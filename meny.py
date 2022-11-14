@@ -1,15 +1,19 @@
-"""Klasser og funksjoner for et menysystem.
-"""
+"""Klasser og funksjoner for å lage et menysystem."""
 
-from os import name, system
-from typing import Any, Optional
+from __future__ import annotations
+
+from os import name
+from os import system
+from typing import Any
 
 
-_debug_enabled = True
+_debug_enabled: bool = True
 
 
 def _clear() -> None:
     """Clear the terminal screen.
+
+    For internal use.
 
     Args:
 
@@ -29,24 +33,29 @@ class MenyValg():
 
     Attributes:
         text: str
-        function: Optional[object] = None
+        function: object | None = None
         arguments: tuple[Any, ...] = ()
-        parent: MenyListe = None
-        storage: Optional[Any] = None
+        parent: MenyListe | None = None
+        storage: Any | None = None
     """
 
+    text: str
+    function: object | None
+    arguments: tuple[Any, ...]
+    parent: MenyListe | None = None
+    storage: Any | None = None
+
     def __init__(
-            self,
-            text: str,
-            function: Optional[object] = None,
-            args: tuple[Any, ...] = ()):
+        self,
+        text: str,
+        function: object | None = None,
+        args: tuple[Any, ...] = (),
+    ) -> None:
         self.text = text
         self.function = function
         self.arguments = args
         # self.parent will be set to meny_x by meny_x.append().
-        self.parent = None
         # self.storage grabs the return of self.function(*self.arguments).
-        self.storage = None
 
     # TODO(Issue l): def __str__(self) -> str:
 
@@ -61,37 +70,46 @@ class MenyValg():
             SystemExit("\U0001F92F Avslutter.")
         """
 
+        # DEBUG: MenyValg.run().
+        if _debug_enabled:
+            print(f"DEBUG: function: {self.function}")
+            print(f"DEBUG: arguments: {self.arguments}")
+            print(f"DEBUG: parent: {self.parent}")
+            print(f"DEBUG: storage: {self.storage}")
+            print(f"DEBUG: id(storage): {id(self.storage)}")
+
         if self.function is None:
             pass  # Placeholder.
             # TODO(Issue l): Kjør en avsluttende funksjon.
             raise SystemExit("\U0001F92F Avslutter.")
         else:
-            # DEBUG: MenyValg.run().
-            if _debug_enabled:
-                print(f"DEBUG: function: {self.function}")
-                print(f"DEBUG: arguments: {self.arguments}")
-                print(f"DEBUG: parent: {self.parent}")
-            # TODO(Issue l): Lag en try/except rundt denne.
-            # self.arguments is a tuple of arguments.
-            # *self.arguments (with leading asterix) unpacks the arguments.
-            # self.storage grabs the return of self.function(*self.arguments).
-            self.storage = self.function(*self.arguments)
+            if callable(self.function):
+                # TODO(Issue l): Lag en try/except rundt denne.
+                # self.arguments is a tuple of arguments.
+                # *self.arguments (with leading asterix) unpacks the arguments.
+                # self.storage grabs the return of
+                # self.function(*self.arguments).
+                self.storage = self.function(*self.arguments)
+
             # DEBUG: MenyValg.run().
             if _debug_enabled:
                 print(f"DEBUG: storage: {self.storage}")
+                print(f"DEBUG: id(storage): {id(self.storage)}")
+
             if self.parent is None:
                 pass  # Placeholder.
                 # TODO(Issue l): Kjør en avsluttende funksjon.
                 raise SystemExit("\U0001F92F Avslutter.")
             else:
-                # DEBUG: MenyValg.run().
-                if _debug_enabled:
-                    print(f"DEBUG: id(storage): {id(self.storage)}")
                 self.parent.storage = self.storage
+
                 # DEBUG: MenyValg.run().
                 if _debug_enabled:
+                    print(f"DEBUG: parent.storage: "
+                          f"{self.parent.storage}")
                     print(f"DEBUG: id(parent.storage): "
                           f"{id(self.parent.storage)}")
+
                 self.parent.show()
 
 
@@ -111,21 +129,28 @@ class MenyListe():
     Attributes:
         entries: list[MenyValg]
         clear_terminal: bool = False
-        storage: Optional[Any] = None
+        storage: Any | None = None
     """
 
+    entries: list[MenyValg]
+    clear_terminal: bool
+    storage: Any | None = None
+
     def __init__(
-            self,
-            clear_terminal: bool = False):
-        self.entries = []
+        self,
+        clear_terminal: bool = False,
+    ) -> None:
+        self.entries: list[MenyValg] = []
         self.clear_terminal = clear_terminal
         # self.storage will be set by valg_x.run().
         # self.storage grabs the return of valg_x.function(*valg_x.arguments).
-        self.storage = None
 
     # TODO(Issue l): def __str__(self) -> str:
 
-    def append(self, entry: MenyValg) -> None:
+    def append(
+        self,
+        entry: MenyValg,
+    ) -> None:
         """Legger et menyvalg til i menylisten.
 
         Args:
@@ -149,7 +174,7 @@ class MenyListe():
         """
 
         # TODO(Issue l): Lag en try/except i en while loop rundt denne.
-        user_input = int(
+        user_input: int = int(
             input(f" > Skriv et tall "
                   f"[0-{len(self.entries) - 1}]: "))
         print(f"    > Du valgte: "
@@ -181,7 +206,9 @@ class MenyListe():
 
 
 # TEST: _test_meny().
-def _test_meny(clear_terminal: bool = False) -> None:
+def _test_meny(
+    clear_terminal: bool = False,
+) -> None:
     """Tester et menysystem.
 
     Args:
@@ -193,8 +220,9 @@ def _test_meny(clear_terminal: bool = False) -> None:
     Raises:
     """
 
-    test_meny_a = MenyListe(clear_terminal)
-    test_meny_b = MenyListe(clear_terminal)
+    test_meny_a: MenyListe = MenyListe(clear_terminal)
+    test_meny_b: MenyListe = MenyListe(clear_terminal)
+
     # DEBUG: _test_meny().
     if _debug_enabled:
         print(f"DEBUG: id(test_meny_a): {id(test_meny_a)}")
@@ -224,6 +252,7 @@ def _test_meny(clear_terminal: bool = False) -> None:
         "Avslutt.",
         None,
         ()))
+
     # DEBUG: _test_meny().
     if _debug_enabled:
         print(f"DEBUG: id(test_meny_a): {id(test_meny_a)}")
@@ -253,6 +282,7 @@ def _test_meny(clear_terminal: bool = False) -> None:
         "Avslutt.",
         None,
         ()))
+
     # DEBUG: _test_meny().
     if _debug_enabled:
         print(f"DEBUG: id(test_meny_a): {id(test_meny_a)}")

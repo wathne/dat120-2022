@@ -1,3 +1,2 @@
-Legekontor;Sandnes;2022-11-03 10:20:00;20
 frisør;Sola;2022-10-29 14:30:00;30
 Det begynner å regne.;Oslo;2022-11-11 13:37:00;9001

@@ -1,10 +1,8 @@
-"""Avtalebok.
+"""Avtalebok."""
 
-chmod a+rwx ./avtalebok.txt
-chmod a+rwx ./test_avtalebok.txt
-chmod a+rwx ./backup_test_avtalebok.txt
-"""
+from typing import Any
 
+from asdf import Avtale
 from asdf import endre_avtale_fra_avtaleliste
 from asdf import les_fra_tekstfil
 from asdf import ny_avtale_til_avtaleliste
@@ -15,10 +13,12 @@ from meny import MenyListe
 from meny import MenyValg
 
 
-_debug_enabled = True
+_debug_enabled: bool = True
 
 
-def _start_meny(clear_terminal: bool = False) -> None:
+def _start_meny(
+    clear_terminal: bool = False,
+) -> None:
     """Starter et menysystem.
 
     Args:
@@ -31,37 +31,36 @@ def _start_meny(clear_terminal: bool = False) -> None:
     """
 
     # Initialize list[Avtale] and filepath.
-    avtaleliste = []
-    overskrift = None
-    tekstfil = "./avtalebok.txt"
-    test_tekstfil = "./test_avtalebok.txt"
-    backup_test_tekstfil = "./backup_test_avtalebok.txt"
+    avtaleliste: list[Avtale] = []
+    overskrift: str | None = None
+    tekstfil: str = "./avtalebok.txt"
+    test_tekstfil: str = "./test_avtalebok.txt"
+    backup_test_tekstfil: str = "./backup_test_avtalebok.txt"
 
     # Initialize MenyListe A, B and DEBUG
-    meny_a = MenyListe(clear_terminal)
-    meny_b = MenyListe(clear_terminal)
-    meny_debug = MenyListe(clear_terminal)
+    meny_a: MenyListe = MenyListe(clear_terminal)
+    meny_b: MenyListe = MenyListe(clear_terminal)
+    meny_debug: MenyListe = MenyListe(clear_terminal)
 
-    # TODO(Issue l): Import and add functions.
     # MenyValg function- and arguments-placeholders.
-    show_all_avtale_text = "Vis alle avtaler."
-    show_all_avtale_func = vis_avtaleliste
-    show_all_avtale_args = (avtaleliste, overskrift,)
-    read_file_text = "Les avtaler fra fil."
-    read_file_func = les_fra_tekstfil
-    read_file_args = (avtaleliste, tekstfil,)
-    write_file_text = "Skriv avtaler til fil."
-    write_file_func = skriv_til_tekstfil
-    write_file_args = (avtaleliste, tekstfil,)
-    create_avtale_text = "Lag en ny avtale."
-    create_avtale_func = ny_avtale_til_avtaleliste
-    create_avtale_args = (avtaleliste,)
-    edit_avtale_text = "Rediger en avtale."
-    edit_avtale_func = endre_avtale_fra_avtaleliste
-    edit_avtale_args = (avtaleliste,)
-    delete_avtale_text = "Slett en avtale."
-    delete_avtale_func = slett_avtale_fra_avtaleliste
-    delete_avtale_args = (avtaleliste,)
+    show_all_avtale_text: str = "Vis alle avtaler."
+    show_all_avtale_func: object | None = vis_avtaleliste
+    show_all_avtale_args: tuple[Any, ...] = (avtaleliste, overskrift)
+    read_file_text: str = "Les avtaler fra fil."
+    read_file_func: object | None = les_fra_tekstfil
+    read_file_args: tuple[Any, ...] = (avtaleliste, tekstfil)
+    write_file_text: str = "Skriv avtaler til fil."
+    write_file_func: object | None = skriv_til_tekstfil
+    write_file_args: tuple[Any, ...] = (avtaleliste, tekstfil)
+    create_avtale_text: str = "Lag en ny avtale."
+    create_avtale_func: object | None = ny_avtale_til_avtaleliste
+    create_avtale_args: tuple[Any, ...] = (avtaleliste,)
+    edit_avtale_text: str = "Rediger en avtale."
+    edit_avtale_func: object | None = endre_avtale_fra_avtaleliste
+    edit_avtale_args: tuple[Any, ...] = (avtaleliste,)
+    delete_avtale_text: str = "Slett en avtale."
+    delete_avtale_func: object | None = slett_avtale_fra_avtaleliste
+    delete_avtale_args: tuple[Any, ...] = (avtaleliste,)
 
     # Populate MenyListe A with MenyValg.
     meny_a.append(MenyValg(
@@ -133,15 +132,15 @@ def _start_meny(clear_terminal: bool = False) -> None:
     meny_debug.append(MenyValg(
         f"les_fra_tekstfil {test_tekstfil}",
         les_fra_tekstfil,
-        (avtaleliste, test_tekstfil,)))
+        (avtaleliste, test_tekstfil)))
     meny_debug.append(MenyValg(
         f"skriv_til_tekstfil {test_tekstfil}",
         skriv_til_tekstfil,
-        (avtaleliste, test_tekstfil,)))
+        (avtaleliste, test_tekstfil)))
     meny_debug.append(MenyValg(
         f"les_fra_tekstfil {backup_test_tekstfil}",
         les_fra_tekstfil,
-        (avtaleliste, backup_test_tekstfil,)))
+        (avtaleliste, backup_test_tekstfil)))
     meny_debug.append(MenyValg(
         "A meny.",
         meny_a.show,
