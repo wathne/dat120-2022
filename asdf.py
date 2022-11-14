@@ -294,7 +294,7 @@ def les_fra_tekstfil(
     avtaleliste: list[Avtale],
     tekstfil: str = "./avtalebok.txt",
 ) -> list[Avtale]:
-    """Leser inn ei liste med avtaler fra ei tekstfil.
+    """Leser inn en liste med avtaler fra en tekstfil.
 
     En avtaleliste er mutable. Vi bevarer id(avtaleliste).
     Det er ikke nødvendig å ta imot returverdien.
