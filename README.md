@@ -12,12 +12,3 @@ start-tidspunkt og varighet.
 Deloppgaver:
 https://github.com/wathne/dat120-22h-g94/issues
 
-
-
-Prosjektoppgave: Avtalebok utvidelser (Øving 10: Prosjekt del 2)
-----------------------------------------------------------------
-Dere skal utvide avtaleboka slik at avtalene har deltakerlister samt
-at dere lagrer mer informasjon om stedet enn en tekst.
-
-Deloppgaver:
-https://github.com/wathne/dat120-22h-g94/issues
