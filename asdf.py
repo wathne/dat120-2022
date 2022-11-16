@@ -1,4 +1,4 @@
-"""Klasser og funksjoner for å lage avtaler."""
+"""Klasser og funksjoner for avtaler."""
 
 from collections.abc import Generator
 from contextlib import contextmanager
@@ -19,11 +19,6 @@ class Avtale:
         starttidspunkt: datetime
         varighet: int
     """
-
-    tittel: str
-    sted: str
-    starttidspunkt: datetime
-    varighet: int
 
     def __init__(
         self,

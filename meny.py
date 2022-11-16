@@ -1,4 +1,4 @@
-"""Klasser og funksjoner for å lage et menysystem."""
+"""Klasser og funksjoner for menysystem."""
 
 from __future__ import annotations
 
@@ -39,12 +39,6 @@ class MenyValg():
         storage: Any | None = None
     """
 
-    text: str
-    function: object | None
-    arguments: tuple[Any, ...]
-    parent: MenyListe | None = None
-    storage: Any | None = None
-
     def __init__(
         self,
         text: str,
@@ -55,7 +49,9 @@ class MenyValg():
         self.function = function
         self.arguments = args
         # self.parent will be set to meny_x by meny_x.append().
+        self.parent: MenyListe | None = None
         # self.storage grabs the return of self.function(*self.arguments).
+        self.storage: Any | None = None
 
     # TODO(Issue l): def __str__(self) -> str:
 
@@ -127,14 +123,10 @@ class MenyListe():
     (Obs! Traceback kan bli lang.)
 
     Attributes:
-        entries: list[MenyValg]
+        entries: list[MenyValg] = []
         clear_terminal: bool = False
         storage: Any | None = None
     """
-
-    entries: list[MenyValg]
-    clear_terminal: bool
-    storage: Any | None = None
 
     def __init__(
         self,
@@ -144,6 +136,7 @@ class MenyListe():
         self.clear_terminal = clear_terminal
         # self.storage will be set by valg_x.run().
         # self.storage grabs the return of valg_x.function(*valg_x.arguments).
+        self.storage: Any | None = None
 
     # TODO(Issue l): def __str__(self) -> str:
 
