@@ -1,4 +1,8 @@
-"""Klasser og funksjoner for å lage et menysystem."""
+"""Klasser og metoder for menysystem.
+
+Menysystemet drives av sammenhengende klasseinstanser istedenfor å
+bruke en loop.
+"""
 
 from __future__ import annotations
 
@@ -7,7 +11,7 @@ from os import system
 from typing import Any
 
 
-_debug_enabled: bool = True
+_debug_enabled: bool = False
 
 
 def _clear() -> None:
@@ -33,17 +37,11 @@ class MenyValg():
 
     Attributes:
         text: str
-        function: object | None = None
-        arguments: tuple[Any, ...] = ()
-        parent: MenyListe | None = None
-        storage: Any | None = None
+        function: object | None
+        arguments: tuple[Any, ...]
+        parent: MenyListe | None
+        storage: Any | None
     """
-
-    text: str
-    function: object | None
-    arguments: tuple[Any, ...]
-    parent: MenyListe | None = None
-    storage: Any | None = None
 
     def __init__(
         self,
@@ -51,11 +49,13 @@ class MenyValg():
         function: object | None = None,
         args: tuple[Any, ...] = (),
     ) -> None:
-        self.text = text
-        self.function = function
-        self.arguments = args
+        self.text: str = text
+        self.function: object | None = function
+        self.arguments: tuple[Any, ...] = args
         # self.parent will be set to meny_x by meny_x.append().
+        self.parent: MenyListe | None = None
         # self.storage grabs the return of self.function(*self.arguments).
+        self.storage: Any | None = None
 
     # TODO(Issue l): def __str__(self) -> str:
 
@@ -128,22 +128,19 @@ class MenyListe():
 
     Attributes:
         entries: list[MenyValg]
-        clear_terminal: bool = False
-        storage: Any | None = None
+        clear_terminal: bool
+        storage: Any | None
     """
-
-    entries: list[MenyValg]
-    clear_terminal: bool
-    storage: Any | None = None
 
     def __init__(
         self,
         clear_terminal: bool = False,
     ) -> None:
         self.entries: list[MenyValg] = []
-        self.clear_terminal = clear_terminal
+        self.clear_terminal: bool = clear_terminal
         # self.storage will be set by valg_x.run().
         # self.storage grabs the return of valg_x.function(*valg_x.arguments).
+        self.storage: Any | None = None
 
     # TODO(Issue l): def __str__(self) -> str:
 
@@ -154,6 +151,7 @@ class MenyListe():
         """Legger et menyvalg til i menylisten.
 
         Args:
+            entry: MenyValg
 
         Returns:
 
@@ -194,7 +192,7 @@ class MenyListe():
 
         # DEBUG: MenyListe.show().
         if _debug_enabled:
-            print(f"DEBUG: id(@MenyListe.show() storage):{id(self.storage)}")
+            print(f"DEBUG: @MenyListe.show(): id(storage): {id(self.storage)}")
 
         if self.clear_terminal:
             _clear()
@@ -205,7 +203,6 @@ class MenyListe():
         self._input()
 
 
-# TEST: _test_meny().
 def _test_meny(
     clear_terminal: bool = False,
 ) -> None:
@@ -231,27 +228,33 @@ def _test_meny(
     test_meny_a.append(MenyValg(
         "Valg A1.",
         print,
-        ("Kjører A1.",)))
+        ("Kjører A1.",),
+    ))
     test_meny_a.append(MenyValg(
         "Valg A2.",
         print,
-        ("Kjører A2.",)))
+        ("Kjører A2.",),
+    ))
     test_meny_a.append(MenyValg(
         "Valg A3.",
         print,
-        ("Kjører A3.",)))
+        ("Kjører A3.",),
+    ))
     test_meny_a.append(MenyValg(
         "Valg A4.",
         print,
-        ("Kjører A4.",)))
+        ("Kjører A4.",),
+    ))
     test_meny_a.append(MenyValg(
         "B meny.",
         test_meny_b.show,
-        ()))
+        (),
+    ))
     test_meny_a.append(MenyValg(
         "Avslutt.",
         None,
-        ()))
+        (),
+    ))
 
     # DEBUG: _test_meny().
     if _debug_enabled:
@@ -261,27 +264,33 @@ def _test_meny(
     test_meny_b.append(MenyValg(
         "Valg B1.",
         print,
-        ("Kjører B1.",)))
+        ("Kjører B1.",),
+    ))
     test_meny_b.append(MenyValg(
         "Valg B2.",
         print,
-        ("Kjører B2.",)))
+        ("Kjører B2.",),
+    ))
     test_meny_b.append(MenyValg(
         "Valg B3.",
         print,
-        ("Kjører B3.",)))
+        ("Kjører B3.",),
+    ))
     test_meny_b.append(MenyValg(
         "Valg B4.",
         print,
-        ("Kjører B4.",)))
+        ("Kjører B4.",),
+    ))
     test_meny_b.append(MenyValg(
         "A meny.",
         test_meny_a.show,
-        ()))
+        (),
+    ))
     test_meny_b.append(MenyValg(
         "Avslutt.",
         None,
-        ()))
+        (),
+    ))
 
     # DEBUG: _test_meny().
     if _debug_enabled:

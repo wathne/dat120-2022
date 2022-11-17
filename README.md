@@ -16,8 +16,11 @@ https://github.com/wathne/dat120-22h-g94/issues
 
 Prosjektoppgave: Avtalebok utvidelser (Øving 10: Prosjekt del 2)
 ----------------------------------------------------------------
-Dere skal utvide avtaleboka slik at avtalene har deltakerlister samt
-at dere lagrer mer informasjon om stedet enn en tekst.
+Dere skal utvide avtaleboka slik at avtalene har kategorier samt at
+dere lagrer mer informasjon om stedet enn en tekst. En avtale kan ha
+flere kategorier. For eksempel en forelesning i DAT120 kan ha både
+kategorien "Forelesning" og kategorien "DAT120".
 
 Deloppgaver:
 https://github.com/wathne/dat120-22h-g94/issues
+
