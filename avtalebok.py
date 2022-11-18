@@ -15,6 +15,7 @@ from tier2_kategori import ny_kategori_til_kategoriliste
 from tier2_kategori import slett_kategori_fra_kategoriliste
 from tier3_avtale import Avtale
 from tier3_avtale import endre_avtale_fra_avtaleliste
+from tier3_avtale import legg_til_kategori_til_avtale
 from tier3_avtale import ny_avtale_til_avtaleliste
 from tier3_avtale import slett_avtale_fra_avtaleliste
 from tier4_io import les_fra_tekstfil
@@ -55,8 +56,13 @@ def _start_meny(
     meny_settings: MenyListe = MenyListe(clear_terminal)
     meny_debug: MenyListe = MenyListe(clear_terminal)
 
-    # TODO(Issue 10o):
     # MenyValg function- and arguments-placeholders.
+    add_kategori_to_avtale_text: str = "Legg til kategori til avtale."
+    add_kategori_to_avtale_func: object | None = legg_til_kategori_til_avtale
+    add_kategori_to_avtale_args: tuple[Any, ...] = (
+        avtaleliste,
+        kategoriliste,
+    )
     show_all_avtale_text: str = "Vis alle avtaler."
     show_all_avtale_func: object | None = vis_liste
     show_all_avtale_args: tuple[Any, ...] = (
@@ -95,7 +101,6 @@ def _start_meny(
         avtaleliste,
     )
 
-    # TODO(Issue 10o):
     # MenyValg function- and arguments-placeholders.
     show_all_kategori_text: str = "Vis alle kategorier."
     show_all_kategori_func: object | None = vis_liste
@@ -172,6 +177,11 @@ def _start_meny(
         delete_avtale_args,
     ))
     meny_avtale.append(MenyValg(
+        add_kategori_to_avtale_text,
+        add_kategori_to_avtale_func,
+        add_kategori_to_avtale_args,
+    ))
+    meny_avtale.append(MenyValg(
         "Kategorimeny.",
         meny_kategori.show,
         (),
@@ -219,6 +229,11 @@ def _start_meny(
         delete_kategori_text,
         delete_kategori_func,
         delete_kategori_args,
+    ))
+    meny_kategori.append(MenyValg(
+        add_kategori_to_avtale_text,
+        add_kategori_to_avtale_func,
+        add_kategori_to_avtale_args,
     ))
     meny_kategori.append(MenyValg(
         "Avtalemeny.",
