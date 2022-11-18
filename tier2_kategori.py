@@ -213,6 +213,8 @@ def slett_kategori_fra_kategoriliste(
     # Rebuild kategoriliste without breaking id(kategoriliste).
     # To skip deletion, simply set: slett = len(kategoriliste).
     temp_kategoriliste: list[Kategori] = []
+    i: int
+    kategori: Kategori
     for i, kategori in enumerate(kategoriliste):
         if i != slett:
             temp_kategoriliste.append(kategori)
@@ -289,6 +291,8 @@ def endre_kategori_fra_kategoriliste(
     # Rebuild kategoriliste without breaking id(kategoriliste).
     # To skip change, simply set: endre = len(kategoriliste).
     temp_kategoriliste: list[Kategori] = []
+    i: int
+    kategori: Kategori
     for i, kategori in enumerate(kategoriliste):
         if i != endre:
             temp_kategoriliste.append(kategori)
