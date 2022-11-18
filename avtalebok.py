@@ -40,10 +40,10 @@ def _start_meny(
 
     avtaleliste: list[Avtale] = []
     avtaleliste_fil: str = "./avtaleliste.txt"
-    avtaleliste_overskrift: str | None = None
+    avtaleliste_overskrift: str | None = "Avtaleliste:"
     kategoriliste: list[Kategori] = []
     kategoriliste_fil: str = "./kategoriliste.txt"
-    kategoriliste_overskrift: str | None = None
+    kategoriliste_overskrift: str | None = "Kategoriliste:"
 
     test_fil: str = "./test_avtaleliste.txt"
     backup_test_fil: str = "./backup_test_avtaleliste.txt"
@@ -55,6 +55,7 @@ def _start_meny(
     meny_settings: MenyListe = MenyListe(clear_terminal)
     meny_debug: MenyListe = MenyListe(clear_terminal)
 
+    # TODO(Issue 10o):
     # MenyValg function- and arguments-placeholders.
     show_all_avtale_text: str = "Vis alle avtaler."
     show_all_avtale_func: object | None = vis_liste
@@ -62,19 +63,21 @@ def _start_meny(
         avtaleliste,
         avtaleliste_overskrift,
     )
-    read_avtale_file_text: str = "Les avtaler fra fil."
+    read_avtale_file_text: str = "Les avtaler og kategorier fra fil."
     read_avtale_file_func: object | None = les_fra_tekstfil
     read_avtale_file_args: tuple[Any, ...] = (
         avtaleliste,
-        "Avtale",
         avtaleliste_fil,
+        kategoriliste,
+        kategoriliste_fil,
     )
-    write_avtale_file_text: str = "Skriv avtaler til fil."
+    write_avtale_file_text: str = "Skriv avtaler og kategorier til fil."
     write_avtale_file_func: object | None = skriv_til_tekstfil
     write_avtale_file_args: tuple[Any, ...] = (
         avtaleliste,
-        "Avtale",
         avtaleliste_fil,
+        kategoriliste,
+        kategoriliste_fil,
     )
     create_avtale_text: str = "Lag en ny avtale."
     create_avtale_func: object | None = ny_avtale_til_avtaleliste
@@ -92,6 +95,7 @@ def _start_meny(
         avtaleliste,
     )
 
+    # TODO(Issue 10o):
     # MenyValg function- and arguments-placeholders.
     show_all_kategori_text: str = "Vis alle kategorier."
     show_all_kategori_func: object | None = vis_liste
@@ -99,18 +103,20 @@ def _start_meny(
         kategoriliste,
         kategoriliste_overskrift,
     )
-    read_kategori_file_text: str = "Les kategorier fra fil."
+    read_kategori_file_text: str = "Les avtaler og kategorier fra fil."
     read_kategori_file_func: object | None = les_fra_tekstfil
     read_kategori_file_args: tuple[Any, ...] = (
+        avtaleliste,
+        avtaleliste_fil,
         kategoriliste,
-        "Kategori",
         kategoriliste_fil,
     )
-    write_kategori_file_text: str = "Skriv kategorier til fil."
+    write_kategori_file_text: str = "Skriv avtaler og kategorier til fil."
     write_kategori_file_func: object | None = skriv_til_tekstfil
     write_kategori_file_args: tuple[Any, ...] = (
+        avtaleliste,
+        avtaleliste_fil,
         kategoriliste,
-        "Kategori",
         kategoriliste_fil,
     )
     create_kategori_text: str = "Lag en ny kategori."
@@ -275,19 +281,19 @@ def _start_meny(
         (),
     ))
     meny_debug.append(MenyValg(
-        f"les_fra_tekstfil() {test_fil}",
+        f"les_fra_tekstfil() {test_fil}, {kategoriliste_fil}",
         les_fra_tekstfil,
-        (avtaleliste, test_fil),
+        (avtaleliste, test_fil, kategoriliste, kategoriliste_fil),
     ))
     meny_debug.append(MenyValg(
-        f"skriv_til_tekstfil() {test_fil}",
+        f"skriv_til_tekstfil() {test_fil}, {kategoriliste_fil}",
         skriv_til_tekstfil,
-        (avtaleliste, test_fil),
+        (avtaleliste, test_fil, kategoriliste, kategoriliste_fil),
     ))
     meny_debug.append(MenyValg(
-        f"les_fra_tekstfil() {backup_test_fil}",
+        f"les_fra_tekstfil() {backup_test_fil}, {kategoriliste_fil}",
         les_fra_tekstfil,
-        (avtaleliste, backup_test_fil),
+        (avtaleliste, backup_test_fil, kategoriliste, kategoriliste_fil),
     ))
 
     # Start the show :)
