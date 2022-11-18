@@ -28,6 +28,8 @@ def vis_liste(
 
     if overskrift is not None:
         print(overskrift)
+    i: int
+    item: Any
     for i, item in enumerate(liste):
         print(f"[{i}]{item}")
 
