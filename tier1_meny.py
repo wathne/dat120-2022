@@ -57,7 +57,7 @@ class MenyValg():
         # self.storage grabs the return of self.function(*self.arguments).
         self.storage: Any | None = None
 
-    # TODO(Issue l): def __str__(self) -> str:
+    # TODO(Issue 9l): def __str__(self) -> str:
 
     def run(self) -> None:
         """Kjører funksjonen til et menyvalg.
@@ -80,11 +80,11 @@ class MenyValg():
 
         if self.function is None:
             pass  # Placeholder.
-            # TODO(Issue l): Kjør en avsluttende funksjon.
+            # TODO(Issue 9l): Kjør en avsluttende funksjon.
             raise SystemExit("\U0001F92F Avslutter.")
         else:
             if callable(self.function):
-                # TODO(Issue l): Lag en try/except rundt denne.
+                # TODO(Issue 9l): Lag en try/except rundt denne.
                 # self.arguments is a tuple of arguments.
                 # *self.arguments (with leading asterix) unpacks the arguments.
                 # self.storage grabs the return of
@@ -98,7 +98,7 @@ class MenyValg():
 
             if self.parent is None:
                 pass  # Placeholder.
-                # TODO(Issue l): Kjør en avsluttende funksjon.
+                # TODO(Issue 9l): Kjør en avsluttende funksjon.
                 raise SystemExit("\U0001F92F Avslutter.")
             else:
                 self.parent.storage = self.storage
@@ -142,7 +142,7 @@ class MenyListe():
         # self.storage grabs the return of valg_x.function(*valg_x.arguments).
         self.storage: Any | None = None
 
-    # TODO(Issue l): def __str__(self) -> str:
+    # TODO(Issue 9l): def __str__(self) -> str:
 
     def append(
         self,
@@ -171,7 +171,7 @@ class MenyListe():
         Raises:
         """
 
-        # TODO(Issue l): Lag en try/except i en while loop rundt denne.
+        # TODO(Issue 9l): Lag en try/except i en while loop rundt denne.
         user_input: int = int(
             input(f" > Skriv et tall "
                   f"[0-{len(self.entries) - 1}]: "))
@@ -197,6 +197,8 @@ class MenyListe():
         if self.clear_terminal:
             _clear()
         print("----------------------------------------")
+        i: int
+        entry: MenyValg
         for i, entry in enumerate(self.entries):
             print(f"[{i}]{entry.text}")
         print("----------------------------------------")
