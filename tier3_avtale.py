@@ -46,7 +46,7 @@ class Avtale:
             f"sted: {self.sted}, "
             f"starttidspunkt: {self.starttidspunkt}, "
             f"varighet: {self.varighet}, "
-            f"kategorier: {', '.join(str(k) for k in self.kategorier)}.")
+            f"kategorier: {', '.join(str(k) for k in self.kategorier)}")
 
     def legg_til_kategori(
         self,

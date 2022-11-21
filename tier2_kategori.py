@@ -37,7 +37,7 @@ class Kategori:
             f"id_: {self.id_}, "
             f"navn: {self.navn}, "
             f"prioritet: {self.prioritet} "
-            f"({self._prioritet_string[self.prioritet]}).")
+            f"({self._prioritet_string[self.prioritet]})")
 
 
 def ny_kategori() -> Kategori:
