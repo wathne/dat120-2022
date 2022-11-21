@@ -17,8 +17,7 @@ mulighet for å lagre avtalelista til fil og hente den fra fil.
 Avtaleboka skal kunne registrere avtaler med tittel, sted,
 start-tidspunkt og varighet."
 
-group_94_branch (wathne, MorenoRod, trymholms, 
-Johnny78i):
+group_94_branch (wathne, MorenoRod, trymholms, Johnny78i):
 https://github.com/wathne/dat120-22h/tree/group_94_branch
 
 Deloppgaver:
